@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedInfo</title>
+    <link rel="stylesheet" href="{% static 'css/frontpage.css' %}">
+    
+</head>
+<body>
+    <nav>
+        <label class="logo">MedInfo</label>
+        <ul>
+            {% if logged_in_user %}
+              <li><a class="username">Welcome {{username}}</a></li>
+                <li><a href="/user_profile">View Profile</a></li>
+              <li><a href="/logout_user" class="right">Logout</a></li>
+            {% else %}
+                <li><a href="/chooseregister">Register</a></li>
+                <li><a href="/login">Login</a></li>
+            {% endif %}
+
+        </ul>
+    </nav>
+    <!-- Card layout starts-->
+ <div id="main-content" class="container">
+        <!--row starts-->
+      <div class="row">
+           <!--image card starts-->
+                <div class="image">
+                   <img src="{% static 'img/hospital.jpg' %}" alt="">
+                    <div class ="details">
+                        <h2>Hospitals</h2>
+                        <p>This is a place where you can get information about hospitals,their services,doctors and their details.</p>
+                        <div class = "view">
+                            <a href="homepage">View</a>
+                        </div>
+                    </div>
+                </div>
+             <!--image card ends-->
+                <!--image card starts-->
+                <div class="image">
+                    <img src="{% static 'img/pharmacy.jpg' %}" alt="">
+                     <div class ="details">
+                         <h2>Medical Stores</h2>
+                         <p>This is a place where you can get information about medical stores,available medicines.</p>
+                         <div class="view">
+                             <a  href="#">View</a>
+                         </div>
+                     </div>
+                 </div>
+              <!--image card ends-->
+                 <!--image card starts-->
+                 <div class="image">
+                    <img src="{% static 'img/bloodbank.jpg' %}" alt="">
+                     <div class ="details">
+                         <h2>Blood banks</h2>
+                         <p>This is a place where you can get information about blood banks.</p>
+                         <div class = "view">
+                            <a href="#">View</a>
+                        </div>
+                     </div>
+                 </div>
+              <!--image card ends-->
+                 <!--image card starts-->
+                 <div class="image">
+                    <img src="{% static 'img/ambulance.jpg' %}" alt="">
+                     <div class ="details">
+                         <h2>Ambulances</h2>
+                         <p>This is a place where you can get information about ambulances.</p>
+                         <div class = "view">
+                            <a href="#">View</a>
+                        </div>
+                     </div>
+                 </div>
+              <!--image card ends-->
+               
+      
+      </div>
+        <!--row ends-->
+ </div>
+         <!-- Card layout ends-->
+</body>
+</html>

@@ -1,0 +1,30 @@
+{% extends "hospitaladmin_nav.html" %}
+
+{% block body %}
+
+<div style="margin-top:90px;margin-left:280px;">
+    {% if messages %}
+    <ul class="messages">
+    {% for msg in messages %}
+    {% if msg.tags == 'error' %}
+    
+    <div class="alert alert-{{msg.tags}}" role="alert" style="margin: 10px;border:solid red;border-radius: 10px;color:black;padding:6px">
+    {{msg.message}}
+    </div>
+    {% endif %}
+    
+    {% if msg.tags == 'success' %}
+    
+    <div class="alert alert-{{msg.tags}}" role="alert" style="margin: 15px;background-color: rgb(72, 255, 0);border:solid black;border-radius: 10px;color:rgb(77, 18, 241);padding:6px">
+    {{msg.message}}
+    </div>
+    {% endif %}
+    
+    {% endfor %}
+    </ul>
+    {% endif %}
+ </div>
+  
+
+
+{% endblock %}

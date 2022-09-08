@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <link rel="stylesheet"  href="{% static 'css/register_user.css' %}">
+
+    <title>User Registration Form</title>
+</head>
+<body>
+    <div class="container">
+       <form class="register-email" action="/doRegister_user" method="POST">
+        {% csrf_token %}
+           <p class="register-text">Create User Account</p>
+          
+           <div class="input-all">
+               <input type="text" placeholder="Username" name ="username" required>
+           </div> 
+           <div class="input-all">
+               <input type="email" placeholder="Email" name="email" required>
+           </div> 
+           <div class="input-all">
+            <input type="password" placeholder="Password" name="password" required>
+        </div> 
+        <div class="input-all">
+            <input type="password" placeholder="Confirm Password" name="cpassword" required>
+        </div> 
+        <div class="input-all">
+            <button class="register-btn">Register</button>
+        </div>
+        <p  class="login-text">Have an account? <a href="login/">Login Here</a></p>
+          
+        <div>
+                    {% if messages %}
+            <ul class="messages">
+            {% for msg in messages %}
+            
+            <div class="alert alert-{{msg.tags}}" role="alert" style="margin: 10px;border:solid red;border-radius: 10px;color:black;padding:6px">
+            {{msg.message}}
+            </div>
+            
+            {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+       </form>
+    </div>
+    
+</body>
+</html>

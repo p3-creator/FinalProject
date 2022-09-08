@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <link rel="stylesheet"  href="{% static 'css/hospitaladmin_nav.css' %}">
+   <script src="{% static 'js/jquery.js' %}"></script>
+
+    <title>Sidebar Menu</title>
+</head>
+<body>
+    <div class="top-navbar">
+        <a class="logout-btn" href="logout_hospital">Logout</a>
+    </div>
+    <nav class="sidebar">
+        {% if request.user.is_authenticated %}
+            <div class="text" >{{request.user.username}}</div>
+        <!-- <div class="text">{{request.user.username}}</div> -->
+
+        <ul>
+            <li><a href="#">Dashboard</a></li>
+
+            <li><a href="#">Profile</a></li>
+
+            <li><a href="#" class="doc-btn">Doctors
+                <img src="{% static 'img/down.png' %}" class="first">
+            </a>
+               
+            <ul class="doc-show options-container">
+                <li><a href="show_doctors" class="option">View Doctors</a></li>
+                <li><a href="add_doctor" class="option">Add Doctors</a></li>
+            </ul>
+            
+            
+            </li>
+            <li><a href="#" class="pat-btn">Patients 
+                <img src="{% static 'img/down.png' %}" class="second">
+            </a>
+                
+           
+            
+                <ul class="pat-show options-container">
+                    <li><a href="#">View Patients</a></li>
+                    
+                </ul>
+                
+            </li>
+            <li><a href="#" class="app-btn">Appointments
+                <img src="{% static 'img/down.png' %}" class="third">
+            </a>
+                
+          
+                <ul class="app-show options-container">
+                    <li><a href="#">View Appointments</a></li>
+                    <li><a href="#">Manage Appointments</a></li>
+                </ul>
+                
+            </li>
+        </ul>
+    </nav>
+    {% endif %}
+
+    {% block body %}
+
+            
+    {% endblock %}
+    <script>
+        $('.doc-btn').click(function(){
+            $('nav ul .doc-show').toggleClass("show")
+            $('nav ul li .first').toggleClass("rotate")
+        });
+
+        $('.pat-btn').click(function(){
+            $('nav ul .pat-show').toggleClass("show1")
+            $('nav ul li .second').toggleClass("rotate")
+        });
+
+        $('.app-btn').click(function(){
+            $('nav ul .app-show').toggleClass("show2")
+            $('nav ul li .third').toggleClass("rotate")
+        });
+
+        $('nav ul li').click(function(){
+            $(this).addClass("active").siblings().removeClass("active")
+        });
+
+      
+
+    </script>
+</body>
+</html>

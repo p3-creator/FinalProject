@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Page Title</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+    .container{
+        width:100%;
+        height:100vh;
+        background-color: whitesmoke;
+        background-position:center;
+        background-size:cover;
+    }
+    .navbar{
+       height:10%;
+       display:flex;
+       align-items:center;
+    }
+
+    .logo{
+        width:10%
+    }
+
+    nav{
+    flex:1;
+    text-align:right;
+    }
+
+    nav ul li{
+        list-style:none;
+        display:inline-block;
+        margin-left:60px;
+         margin-right:60px;
+         margin-top:20px;
+    }
+
+    nav ul li a{
+    text-decoration:none;
+    color:royalblue;
+    font-size:larger;
+
+    }
+
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="navbar">
+       
+        <nav>
+            <ul>
+            <li><a href="">Sign Up</a></li>
+            <li><a href="">Login</a></li>
+
+        </ul>
+        </nav>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            {% block body %}
+
+            
+            {% endblock %}
+     </div>
+    </div>
+
+</div>
+
+</body>
+</html>

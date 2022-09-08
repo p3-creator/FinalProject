@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <link rel="stylesheet"  href="{% static 'css/login.css' %}">
+
+    <title>Login Form</title>
+</head>
+<body>
+    <div class="container">
+       <form  action="/doLogin" method="POST"    class="login-email">
+        {% csrf_token %}
+           <p class="login-text">Login</p>
+          
+           <div class="input-all">
+               <input type="email" placeholder="Email" name="email" required>
+           </div> 
+           <div class="input-all">
+            <input type="password" placeholder="Password" name="password" required>
+        </div> 
+        <div class="input-all">
+            <button class="login-btn">Login</button>
+        </div>
+        <div>
+            {% if messages %}
+    <ul class="messages">
+    {% for msg in messages %}
+    
+    <div class="alert alert-{{msg.tags}}" role="alert" style="margin: 10px;border:solid red;border-radius: 10px;color:black;padding:6px">
+    {{msg.message}}
+    </div>
+    
+    {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+        <!-- <a href="#"  class="fgt-psw">Forgot password?</a> -->
+       </form>
+    </div>
+    
+</body>
+</html>

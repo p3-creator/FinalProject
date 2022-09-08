@@ -1,0 +1,138 @@
+*{
+    
+    margin:0;
+    padding:0;
+    user-select: none;
+    color: aliceblue;
+    box-sizing:border-box;
+    font-family:  'sans-serif', 'Verdana', Tahoma;
+
+}
+
+.top-navbar{
+    background-color: rgba(0, 139, 139, 1);
+    height: 65px;
+    top:0;
+    display: flex;
+    align-items: center;
+    position:fixed;
+    width: calc(100% - 250px);
+    margin-left: 250px;
+}
+
+
+.sidebar{
+position: fixed;
+width:250px;
+height: 100%;
+left:0;
+top:0;
+border:solid 1px black;
+background-color: rgb(14, 12, 13);
+
+}
+
+.sidebar .text{
+color:white;
+font-size: 25px;
+font-weight: 600;
+line-height: 65px;
+text-align: center;
+background:darkcyan;
+}
+
+.top-navbar .logout-btn{
+    display:block;
+    text-decoration:none;
+    padding: 10px 10px;
+    text-align: center;
+    border:solid 1px brown;
+    background: rgb(110, 82, 163);
+    border-radius: 30px;
+    font-size: 1.2rem;
+    color: #fff;
+    cursor: pointer;
+    transition: .3s;
+  }
+  
+   .logout-btn:hover{
+      
+      background: rgb(28, 9, 134);
+  }
+
+nav ul{
+height: 100%;
+width: 100%;
+list-style: none;
+/* background: #000;  */
+}
+
+nav ul li{
+line-height: 60px;
+border-bottom: 3px solid rgba(255,255,255,0.1);
+}
+
+nav ul li a{
+position: relative;
+color: seashell;
+text-decoration: none;
+font-size: 20px;
+padding-left: 40px;
+font-weight: 500;
+display: block;
+width: 100%;
+border-left: 3px solid transparent;
+}
+
+nav ul li.active a{
+color:cornflowerblue;
+border-left-color:cornflowerblue ;
+}
+
+nav ul ul{
+position: static;
+display: none;
+}
+
+nav ul .doc-show.show{
+display:block;
+}
+
+nav ul .pat-show.show1{
+display:block;
+}
+
+nav ul .app-show.show2{
+display:block;
+}
+
+nav ul ul li{
+line-height: 40px;
+border-bottom: none;
+}
+
+nav ul ul li a{
+
+font-size: 16px;
+padding-left: 50px;
+}
+
+nav ul li.active ul li a{
+color:white;
+border-left-color: transparent;
+}
+
+
+
+nav ul li a img{
+position: absolute;
+top:50%;
+right:10px;
+transform: translateY(-50%);
+font-size: 22px;
+transition: transform 0.4s;
+}
+
+nav ul li a img.rotate{
+transform: translateY(-50%) rotate(-180deg)
+}

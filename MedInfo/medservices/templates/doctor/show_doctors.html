@@ -1,0 +1,77 @@
+{% extends "hospitaladmin_nav.html" %}
+{% load static %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet"  href="{% static 'css/show_doctors.css' %}">
+</head>
+<body>
+  <h2>View Doctors</h2>
+
+  <div class="row">
+
+  {% for doc in doctors %}
+ 
+   <div class="wrapper">
+     
+     <div class="container">
+       <div class="box">
+         <h1>Doctor ID : {{doc.admin.id}}</h1>
+         <h1>NMC number :  {{doc.nmc_number}}</h1>
+         <h1>Username  :  {{doc.admin.username}}</h1>
+         <h1>Name : {{doc.admin.first_name}} {{doc.admin.last_name}}  </h1>
+         <h1>Education :  {{doc.education}}</h1>
+         <h1>Speciality :  {{doc.speciality}}</h1>
+         <h1>Email :  {{doc.admin.email}}</h1>
+         <br>
+         <a href="edit_doctor/{{doc.admin.id}}" class="btn1">Edit</a>
+         <a href="delete_doctor/{{doc.admin.id}}" class="btn2">Delete</a>
+       </div>
+     </div>
+   </div>
+   {% endfor %}
+  </div>
+</body>
+</html>
+
+    
+
+{% endblock %}
+
+
+
+
+<!-- <ul>
+
+  {% for doc in doctors %}
+  
+ <li>Doctor {{doc.id}} : {{doc.nmc_number}} /n {{doc.education}}  {{doc.speciality}} {{doc.admin.first_name}} {{doc.admin.last_name}}  {{doc.admin.username}} </li>
+{% endfor %} 
+
+</ul>  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

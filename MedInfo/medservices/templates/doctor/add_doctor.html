@@ -1,0 +1,65 @@
+{% extends "hospitaladmin_nav.html" %}
+{% load static %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <link rel="stylesheet"  href="{% static 'css/add_doctor.css' %}">
+
+    <title>Add Doctor</title>
+</head>
+<body>
+    <div class="container">
+       <form class="add_doctor" action="/add_doctor_save" method="POST">
+        {% csrf_token %}
+           <p class="add-text">Add Doctor</p>
+           
+           
+
+           <label for="nmc_no"><b>NMC Number</b></label>
+           <input type="text" placeholder="Enter NMC number" name="nmc_no" id="nmc_no" required>
+
+           <label for="first_name"><b>Doctor First Name</b></label>
+           <input type="text" placeholder="Enter Doctor's First Name" name="first_name" id="first_name" required>
+
+           <label for="last_name"><b>Doctor Last Name</b></label>
+           <input type="text" placeholder="Enter Doctor's Last Name" name="last_name" id="last_name" required>
+           
+           <label for="uname"><b>Doctor  Username</b></label>
+           <input type="text" placeholder="Enter Doctor's Username" name="uname" id="uname" required>
+
+           <label for="speciality"><b>Speciality</b></label>
+           <input type="text" placeholder="Enter Speciality" name="speciality" id="speciality" required>
+       
+
+           <label for="education"><b>Education</b></label>
+           <br>
+           <br>
+            <textarea type="text" row=30 cols=10 placeholder="Enter Education Details" name="education" id="education" required></textarea>
+      <br>
+         <br>
+
+          <label for="email"><b>Email</b></label>
+          <input type="text" placeholder="Enter email" name="email" id="email" required>
+      
+             <label for="password"><b>Password</b></label>
+          <input type="password" placeholder="Enter Password" name="password" id="password" required>
+      
+        
+            
+          <button type="submit" class="registerbtn">Add Doctor</button>
+        </div>
+      
+      
+      </form>
+      
+       </form>
+    </div>
+    
+</body>
+</html>
+{% endblock %}

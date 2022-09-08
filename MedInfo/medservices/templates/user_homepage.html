@@ -1,0 +1,150 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Homepage</title>
+    <link rel="stylesheet" href="{% static 'css/user_homepage.css' %}">
+</head>
+<body>
+    <nav>
+        <label class="logo">MedInfo</label>
+        <ul>
+        {% if logged_in_user %}
+              <li><a class="username"> {{username}}</a></li>
+              <li><a href="/logout_user" class="right">Logout</a></li>
+        {% else %}
+                <li><a href="/chooseregister">Register</a></li>
+                <li><a href="/login">Login</a></li>
+        {% endif %}
+        </ul>
+    </nav>
+    
+    <div id="main-content" class="container">
+        
+        <form class="search" action="/search_options" method="POST" >
+          
+                <div class="row">
+                    
+                        {% csrf_token %}
+                                <div class="input_all">
+                                <input type="text" class="search_location" placeholder="Location(Required)" name="location" required>
+                                </div>
+
+                            
+                                
+
+                        <!-- <div class="select-menu">
+                            <div class="select-btn">
+                                
+                            <span class="selected">
+                                Select Type
+                            </span>
+
+                            </div> -->
+
+                                       
+
+                                  
+                                                             
+                                <div class="select-box">
+                                    <!-- <label for="allopathy">Type</label> -->
+                                    <div class="options-container"> 
+                                        
+                                            <div class="option" >
+                                                <input type="radio" class="radio" id="hospital" name="category"/>
+                                                <label for="hospital">Hospitals</label>
+                                                </div>
+                
+                                                <div class="option" >
+                                                    <input type="radio" class="radio" id="doctor" name="category"/>
+                                                    <label for="doctor">Doctors</label>
+                                                    </div>
+                
+                                                
+                                            </div>
+                                            <div class="selected">
+                                             Select Type
+                                            </div>
+
+                                    
+                            
+
+                            </div>
+
+
+                            <div class="input_all">
+                                <input type="text" class="search_name" placeholder="Name(optional)" name="name">
+                                </div>
+
+                                <div class="input_all">
+                                    <input type="text" class="search_type" placeholder="Type,speciality (optional)" name="type">
+                                    </div>
+
+                                   
+                            <div class="input-all">
+                                <button class="search-btn">Search</button>
+                            </div>
+                       
+                  </div>
+                </form>
+                                    
+                            
+                            
+            </div> 
+            
+       
+
+
+            <div class="row-result">
+
+                {% if hospitals %}
+                {% for hos in hospitals %}
+               
+                 <div class="wrapper">
+                   
+                   <div class="container">
+                     <div class="box">
+                        <h1>Hospital Name : {{hos.admin.username}}</h1>
+                        <h1>Hospital Description : {{hos.description}}</h1>
+                        <h1>Hospital Address : {{hos.address}}</h1>
+                        <h1>Specialities : {{hos.specialities}}</h1>
+                     
+                       <br>
+                     
+                       <a href="#" class="btn1">View More</a>
+                       
+                       <!-- <a href="delete_doctor/{{doc.admin.id}}" class="btn2">Delete</a> -->
+                     </div>
+                   </div>
+                 </div>
+                 {% endfor %}
+                 {% endif %}
+                 {% if context %}
+                  <h1>{{context}}</h1>
+                 {% endif %}
+                </div>
+      
+
+                 <!-- <div>
+                       {% if hospitals %}
+                            {% for hos in hospitals %}
+                            <h1>{{hos.admin.username}}</h1>
+                            <h1>{{hos.description}}</h1>
+                            <h1>{{hos.address}}</h1>
+                            <h1>{{hos.specialities}}</h1>
+                            <button>VIEW MORE</button>
+                            {% endfor %}
+                        {% endif %}
+                        {% if context %}
+                         <h1>{{context}}</h1>
+                        {% endif %}
+                        </div> -->
+
+    
+
+    <script src="{% static 'js/user_homepage.js' %}"></script>
+</body>
+</html>

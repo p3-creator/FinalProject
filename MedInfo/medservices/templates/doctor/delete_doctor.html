@@ -1,0 +1,38 @@
+{% extends "hospitaladmin_nav.html" %}
+{% load static %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <link rel="stylesheet"  href="{% static 'css/delete_doctor.css' %}">
+
+    <title>Edit Doctor  </title>
+</head>
+<body>
+    <div class="container">
+       <form class="delete_doctor" action="/delete_doctor_save" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="doctor_id" id="doctor_id" value = {{doctor.admin.id}}>
+           <p class="add-text">Delete Doctor : Username = {{doctor.admin.username}} </p>
+       
+           <p class="confirm-question">Are you sure you want to delete doctor {{doctor.admin.username}} ?</p>
+           
+
+          <a class="cancel" href="../">Cancel</a>
+            
+          <button type="submit" class="deletebtn">Confirm</button>
+        
+   
+ 
+      
+      </form>
+      
+   </div>
+    
+</body>
+</html>
+{% endblock %}

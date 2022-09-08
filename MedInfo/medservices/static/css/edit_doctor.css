@@ -1,0 +1,103 @@
+*{
+    
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:  'sans-serif', 'Verdana', Tahoma;
+
+}
+
+body{
+   
+    width: 100%;
+    min-height: 100vh;
+   background-color: turquoise;
+    background-position: center;
+    background-size: cover;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.container{
+    
+    position:relative;
+    width:100%;
+    min-height: 400px;
+    background:whitesmoke;
+    margin: 80px 20px 20px 280px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,.3);
+    padding:40px 30px;
+}
+
+input {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    color: black;
+    border: none;
+    background: #f0efef;
+  }
+  
+  input:focus{
+    background-color: #ddd;
+    outline: none;
+  }
+
+  .registerbtn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+  }
+
+  .container textarea{
+         color:black;
+  }
+
+.container .add-text{
+    color:#111;
+    font-weight: 800;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
+    display: block;
+    text-transform: capitalize;
+
+}
+.container .add_doctor .input{
+    width:100%;
+    height:50px;
+    margin-bottom: 25px;
+
+}
+
+.add_doctor label b{
+  color:darkgoldenrod;
+}
+
+.container .add_doctor  .input{
+    width:50%;
+    height:50px;
+    margin-bottom: 25px;
+    margin-right: 5px;
+}
+
+
+
+
+@media(max-width:767px){
+ .container{
+    width:300px;
+ }
+  
+}
+
+

@@ -1,0 +1,19 @@
+{% extends "medservices/layout.html" %}
+
+{% block body %}
+
+<h1>Hospital  {{hospitals.id}}</h1>
+<ul>
+  
+      <li>Name: {{hospitals.name}} </li>
+      <li>Location:{{hospitals.location}} </li> 
+      <li>Specialities {{hospitals.specialities}}</li>
+ 
+</ul>
+<h2>Doctors</h2>
+<ul>
+ {% for doctor in docs %}
+     <li>Doctor {{ doctor.id}} : {{doctor.first_name}} /n {{doctor.last_name}}</li>
+ {% endfor %} 
+</ul>
+{% endblock %}
