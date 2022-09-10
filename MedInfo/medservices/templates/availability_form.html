@@ -10,10 +10,6 @@
  <form action="" method="POST">
     
     {{form.as_p}}
-
-{% for doc in doctor_list %}
-    <h2>{{doc.admin.username}}</h2>
-{% endfor %}
     {% csrf_token %}
     <button type="submit">Book Appointment</button>
 

@@ -1,74 +1,98 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
-    <link rel="stylesheet"  href="{% static 'css/register_hospital.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/register_hospital.css' %}">
 
     <title>Hospital Registration Form</title>
 </head>
+
 <body>
     <div class="container">
-       <form class="register-email" action="/doRegister_hospital" method="POST">
-        {% csrf_token %}
-           <p class="register-text">Create Hospital Account</p>
+        <form class="register-email" action="/doRegister_hospital" method="POST">
+            {% csrf_token %}
+            <p class="register-text">Create Hospital Account</p>
 
-           <div class="input-all">
-            <input type="text" placeholder="Name of your Hospital" name ="name" required>
-        </div> 
-          
-           <div class="input-all desc">
-               <input type="text" rows="10" cols="30" placeholder="Description" name ="description" required>
-           </div> 
-        <div class="row">
-                    <div class="input-all">
+            <div class="input-all">
+                <input type="text" placeholder="Name of your Hospital" name="name" required>
+            </div>
+
+            <div class="input-all desc">
+                <input type="text" rows="10" cols="30" placeholder="Description" name="description" required>
+            </div>
+            <div class="row">
+                <div class="input-all">
                     <input type="tel" id="phone" placeholder="Phone Number" name="phone" pattern="[0-9]{10}" required>
-                </div> 
+                </div>
 
                 <div class="input-all">
                     <input type="text" placeholder="Address" name="address" required>
-                </div> 
-        </div> 
+                </div>
+            </div>
 
-        <div class="row">
+            <div class="row">
+                <div class="input-all">
+                    <input type="text" placeholder="District" name="district" required>
+                </div>
+
+                <div class="input-all">
+                    <input type="text" placeholder="Website" name="website" required>
+                </div>
+            </div>
+
+            <div class="container_checkbox">
+                
+                    <span class="btn-text">Select specialities</span>
+                
+                <div class="row_checkbox">
+                    <input type="checkbox" value="General Surgery" />General Surgery
+                    <input type="checkbox" value="ENT" />ENT
+                    <input type="checkbox" value="Cardiology" />Cardiology
+                    <input type="checkbox" value="Psychiatry" />Psychiatry
+                    <input type="checkbox" value="Pathology" />Pathology
+                    <input type="checkbox" value="Physiotherapy" />Physiotherapy
+                    <input type="checkbox" value="Radiology" />Radiology
+                    <input type="checkbox" value="Dental" />Dental
+                    <input type="checkbox" value="Neurosurgery" />Neurosurgery
+                    <input type="checkbox" value="Urology" />Urology
+                    <input type="checkbox" value="Endocrinology" />Endocrinology
+                    <input type="checkbox" value="Gynecology" />Gynecology
+                    <input type="checkbox" value="Audiology" />Audiology
+                    <input type="checkbox" value="Cancer" />Cancer
+                    <input type="checkbox" value="Rheumatology" />Rheumatology
+
+
+                </div>
+
+
+                <br>
+            </div>
+
+
             <div class="input-all">
-                <input type="text" placeholder="District" name="district" required>
+                <input type="email" placeholder="Email" name="email" required>
+            </div>
+
+
+            <div class="input-all">
+                <input type="password" placeholder="Password" name="password" required>
+            </div>
+            <div class="input-all">
+                <input type="password" placeholder="Confirm Password" name="cpassword" required>
             </div>
 
             <div class="input-all">
-                <input type="text" placeholder="Website" name="website" required>
-            </div> 
-    </div> 
-       
-       <div>
-           
-            <textarea type="text" row=30 cols=10 placeholder="Enter Specialities" name="specialities" id="specialities" required></textarea>
-        <br>
-        <br>
-       </div>
-               
-      
-                <div class="input-all">
-                    <input type="email" placeholder="Email" name="email" required>
-                </div>
-    
-                
-           <div class="input-all">
-            <input type="password" placeholder="Password" name="password" required>
-        </div> 
-        <div class="input-all">
-            <input type="password" placeholder="Confirm Password" name="cpassword" required>
-        </div> 
-
-        <div class="input-all">
-            <button class="register-btn">Register</button>
-        </div>
-        <p  class="login-text">Have an account? <a href="login/">Login Here</a></p>
-       </form>
+                <button class="register-btn">Register</button>
+            </div>
+            <p class="login-text">Have an account? <a href="login/">Login Here</a></p>
+        </form>
     </div>
-    
+
 </body>
+
 </html>

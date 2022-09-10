@@ -96,8 +96,8 @@ SPECIALITY_TYPE = (
 )
 
 class Appointment(models.Model):
-   # user = models.ForeignKey(User,on_delete=models.CASCADE)
-    #hospital = models.ForeignKey(Hospital,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    hospital = models.ForeignKey(Hospital,on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor,on_delete=models.CASCADE)
     speciality = models.CharField(max_length=50,choices=SPECIALITY_TYPE)
     start_datetime = models.DateTimeField()
@@ -105,12 +105,12 @@ class Appointment(models.Model):
     pat_name = models.CharField(max_length=200)
     pat_address = models.CharField(max_length=200)
     pat_contact = models.IntegerField()
-    #paid_amount = models.PositiveIntegerField()
-    #payment_status = models.CharField(max_length=20,choices = PAYMENT_STATUS)
+    paid_amount = models.PositiveIntegerField()
+    payment_status = models.CharField(max_length=20,choices = PAYMENT_STATUS)
     objects = models.Manager()
 
     def __str__(self):
-        return f"appointment with {self.doctor} of speciality {self.speciality}"
+        return f"{self.h_id}"
 
 
 #Creating signal,This is called when data is added into customuser so new row can be added in hospital,doctor,user,bloodbank.
