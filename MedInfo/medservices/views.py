@@ -7,10 +7,13 @@ from django.db.models import Q
 
 from medservices.EmailBackEnd import EmailBackEnd
 
-from .models import Hospital, Doctor, Appointment
-from django.views.generic import ListView, FormView
-from .appointment_forms import AvailabilityForm
-from  .appointment_function.availability import check_availability 
+from .models import Hospital, Doctor
+
+from django.views.generic import View
+from django.http import JsonResponse
+# from django.views.generic import ListView, FormView
+# from .appointment_forms import AvailabilityForm
+# from  .appointment_function.availability import check_availability 
 
 
 
@@ -344,42 +347,78 @@ def delete_doctor_save(request):
 
 
 
-class DoctorList(ListView):
-      model=Doctor
+# class DoctorList(ListView):
+#       model=Doctor
 
-class AppointmentList(ListView):
-      model=Appointment
+# class AppointmentList(ListView):
+#       model=Appointment
 
-class AppointmentView(FormView):
-      # def get(self, request, *args, **kwargs):
-      #       h_id = self.kwargs["h_id"]
+# class AppointmentView(FormView):
+#       def get(self, request, *args, **kwargs):
+#              h_id = self.kwargs.get("h_id")
+#              doctor_list = Doctor.objects.filter(hospital_id = h_id)
+#              context = {
+#                   "doctor_list":doctor_list
+#              }
+#              return render(request,'availability_form.html',context)
 
-      form_class = AvailabilityForm
-      template_name = 'availability_form.html'
+#       form_class = AvailabilityForm
+#       template_name = 'availability_form.html'
 
-      def form_valid(self, form):
-            data = form.cleaned_data
-            doctor_list = Doctor.objects.filter(speciality = data['speciality'])
-            available_doctors = []
-            for doctor in doctor_list:
-                  if check_availability(doctor,data['start_datetime'],data['end_datetime']):
-                        available_doctors.append(doctor)
-            if len(available_doctors)>0:          
-                  doctor = available_doctors[0]
-                  appointment = Appointment.objects.create(
-                        user = request.user,
-                        doctor = doctor,
-                        start_datetime = data['start_datetime'],
-                        end_datetime = data['end_datetime'],
-                        speciality = data['speciality'],
-                        pat_name = data['pat_name'],
-                        pat_address = data['pat_address'],
-                        pat_contact = data['pat_contact'],
-                  )
-                  appointment.save()
-                  return HttpResponse(appointment)
-            else:
-                  return HttpResponse("Appointment is not available.Please check at another time slot")
+#       def form_valid(self, form):
+#             data = form.cleaned_data
+#             doctor_list = Doctor.objects.filter(speciality = data['speciality'])
+            
+#             available_doctors = []
+#             for doctor in doctor_list:
+                 
+#                   if check_availability(doctor,data['start_datetime'],data['end_datetime']):
+                        
+#                         available_doctors.append(doctor)
+#             if len(available_doctors)>0:          
+#                   doctor = available_doctors[0]
+#                   appointment = Appointment.objects.create(
+#                        # user = request.user,
+#                         doctor = doctor,
+#                         start_datetime = data['start_datetime'],
+#                         end_datetime = data['end_datetime'],
+#                         speciality = data['speciality'],
+#                         pat_name = data['pat_name'],
+#                         pat_address = data['pat_address'],
+#                         pat_contact = data['pat_contact'],
+#                   )
+#                   appointment.save()
+#                   return HttpResponse(appointment)
+#             else:
+#                   return HttpResponse("Appointment is not available.Please check at another time slot")
+
+
+
+def appointment_page(request):
+      return render(request,'appointment_page.html')
+
+class KhaltiRequestView(View):
+      def get(self,request,*args,**kwargs):
+            context = {
+
+            }
+      
+            return render(request, "khaltirequest.html",context)
+
+class KhaltiVerifyView(View):
+       def get(self,request,*args,**kwargs):
+            token = request.GET.get("token")
+            amount = request.GET.get("amount")
+            appointment_id = request.GET.get("appointment_id")
+            print(token, amount, appointment_id)
+            data = {
+                  "success":True
+            }
+            return JsonResponse(data)
+
+
+
+
 
             
 
