@@ -8,6 +8,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="{% static 'css/register_hospital.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <script>
+         $(document).ready(function(){
+            $('.checkvalues').click(function()
+            {
+                 var txt = "";
+                 $('.checkvalues:checked').each(function()
+                 {
+                    txt+=$(this).val()+","
+                 });
+
+                 $('#txtvalues').val(txt)
+            });
+         });
+
+    </script>
+
 
     <title>Hospital Registration Form</title>
 </head>
@@ -49,23 +67,27 @@
                 
                     <span class="btn-text">Select specialities</span>
                 
-                <div class="row_checkbox">
-                    <input type="checkbox" value="General Surgery" />General Surgery
-                    <input type="checkbox" value="ENT" />ENT
-                    <input type="checkbox" value="Cardiology" />Cardiology
-                    <input type="checkbox" value="Psychiatry" />Psychiatry
-                    <input type="checkbox" value="Pathology" />Pathology
-                    <input type="checkbox" value="Physiotherapy" />Physiotherapy
-                    <input type="checkbox" value="Radiology" />Radiology
-                    <input type="checkbox" value="Dental" />Dental
-                    <input type="checkbox" value="Neurosurgery" />Neurosurgery
-                    <input type="checkbox" value="Urology" />Urology
-                    <input type="checkbox" value="Endocrinology" />Endocrinology
-                    <input type="checkbox" value="Gynecology" />Gynecology
-                    <input type="checkbox" value="Audiology" />Audiology
-                    <input type="checkbox" value="Cancer" />Cancer
-                    <input type="checkbox" value="Rheumatology" />Rheumatology
-
+                <div class="row_checkbox" name="spec">
+                    <input type="checkbox" value="General Surgery" class="checkvalues" />General Surgery
+                    <input type="checkbox" value="ENT" class="checkvalues"/>ENT
+                    <input type="checkbox" value="Cardiology" class="checkvalues" />Cardiology
+                    <input type="checkbox" value="Psychiatry" class="checkvalues" />Psychiatry
+                    <input type="checkbox" value="Pathology" class="checkvalues" />Pathology
+                    <input type="checkbox" value="Physiotherapy" class="checkvalues" />Physiotherapy
+                    <input type="checkbox" value="Radiology" class="checkvalues" />Radiology
+                    <input type="checkbox" value="Dental" class="checkvalues" />Dental
+                    <input type="checkbox" value="Neurosurgery" class="checkvalues"/>Neurosurgery
+                    <input type="checkbox" value="Urology" class="checkvalues"/>Urology
+                    <input type="checkbox" value="Endocrinology" class="checkvalues"/>Endocrinology
+                    <input type="checkbox" value="Gynecology" class="checkvalues" />Gynecology
+                    <input type="checkbox" value="Audiology" class="checkvalues" />Audiology
+                    <input type="checkbox" value="Cancer" class="checkvalues"/>Cancer
+                    <input type="checkbox" value="Rheumatology" class="checkvalues" />Rheumatology
+                
+                    <div>
+                    <!-- <input type="text" name="specialities" id="txtvalues"/> -->
+                    <textarea type="text" name="specialities" id="txtvalues"></textarea>
+                </div>
 
                 </div>
 

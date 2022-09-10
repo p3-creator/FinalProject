@@ -62,6 +62,11 @@ def doRegister_hospital(request):
             address = request.POST.get("address")
             district = request.POST.get("district")
             website = request.POST.get("website")
+
+            # if request.POST.get('specialities')
+            #    savedata = Hospital()
+            #    savedata.specialities = request.POST.get('specialities')
+            #    savedata.save()
             specialities = request.POST.get("specialities")
             email = request.POST.get("email")
             password = request.POST.get("password")
