@@ -1,13 +1,17 @@
 from django.contrib.auth import login, logout
 from django.contrib import messages
-from django.http import HttpResponseRedirect,HttpResponse
-from django.shortcuts import render,redirect,reverse
+from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, redirect, reverse
 from medservices.models import CustomUser
 from django.db.models import Q
 
 from medservices.EmailBackEnd import EmailBackEnd
 
-from .models import Hospital,Doctor
+from .models import Hospital, Doctor, Appointment
+from django.views.generic import ListView, FormView
+from .appointment_forms import AvailabilityForm
+from  .appointment_function.availability import check_availability 
+
 
 
 def frontpage(request):
@@ -335,6 +339,52 @@ def delete_doctor_save(request):
             doctor.delete()
             messages.success(request,"Successfully Deleted Doctor")
             return HttpResponseRedirect('hospital_admin/')  
+
+
+
+
+
+class DoctorList(ListView):
+      model=Doctor
+
+class AppointmentList(ListView):
+      model=Appointment
+
+class AppointmentView(FormView):
+      # def get(self, request, *args, **kwargs):
+      #       h_id = self.kwargs["h_id"]
+
+      form_class = AvailabilityForm
+      template_name = 'availability_form.html'
+
+      def form_valid(self, form):
+            data = form.cleaned_data
+            doctor_list = Doctor.objects.filter(speciality = data['speciality'])
+            available_doctors = []
+            for doctor in doctor_list:
+                  if check_availability(doctor,data['start_datetime'],data['end_datetime']):
+                        available_doctors.append(doctor)
+            if len(available_doctors)>0:          
+                  doctor = available_doctors[0]
+                  appointment = Appointment.objects.create(
+                        user = request.user,
+                        doctor = doctor,
+                        start_datetime = data['start_datetime'],
+                        end_datetime = data['end_datetime'],
+                        speciality = data['speciality'],
+                        pat_name = data['pat_name'],
+                        pat_address = data['pat_address'],
+                        pat_contact = data['pat_contact'],
+                  )
+                  appointment.save()
+                  return HttpResponse(appointment)
+            else:
+                  return HttpResponse("Appointment is not available.Please check at another time slot")
+
+            
+
+
+
 
 
 

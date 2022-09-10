@@ -21,7 +21,7 @@
 
 
 
- const selected = document.querySelector(".selected");
+const selected = document.querySelector(".selected");
 const optionsContainer = document.querySelector(".options-container");
 const optionsList = document.querySelectorAll(".option");
 
