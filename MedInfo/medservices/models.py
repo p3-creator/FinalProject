@@ -37,7 +37,7 @@ class Doctor(models.Model):
     nmc_number = models.CharField(max_length=50)
     education = models.TextField()
     # experience = models.TextField()
-    speciality = models.TextField()
+    specialities = models.TextField()
     # schedule = models.TextField()
     # email = models.CharField(max_length=250)
     # password = models.CharField(max_length=50)
@@ -83,34 +83,42 @@ class User(models.Model):
     def __str__(self):
         return f"{self.username}"
 
-PAYMENT_STATUS = (
-    ("paid","paid"),
-    ("not paid","not paid"),
-)
-
-SPECIALITY_TYPE = (
-    ("ear","ear"),
-    ("eye","eye"),
-    ("cardiology","cardiology"),
-    
-)
 
 class Appointment(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
-    hospital = models.ForeignKey(Hospital,on_delete=models.CASCADE)
-    doctor = models.ForeignKey(Doctor,on_delete=models.CASCADE)
-    speciality = models.CharField(max_length=50,choices=SPECIALITY_TYPE)
-    start_datetime = models.DateTimeField()
-    end_datetime = models.DateTimeField()
-    pat_name = models.CharField(max_length=200)
-    pat_address = models.CharField(max_length=200)
-    pat_contact = models.IntegerField()
-    paid_amount = models.PositiveIntegerField()
-    payment_status = models.CharField(max_length=20,choices = PAYMENT_STATUS)
-    objects = models.Manager()
+    speciality = models.CharField(max_length=100)
+    doctor = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100)
 
-    def __str__(self):
-        return f"{self.h_id}"
+# PAYMENT_STATUS = (
+#     ("paid","paid"),
+#     ("not paid","not paid"),
+# )
+
+# SPECIALITY_TYPE = (
+#     ("ear","ear"),
+#     ("eye","eye"),
+#     ("cardiology","cardiology"),
+    
+# )
+
+# class Appointment(models.Model):
+#     user = models.ForeignKey(User,on_delete=models.CASCADE)
+#     hospital = models.ForeignKey(Hospital,on_delete=models.CASCADE)
+#     doctor = models.ForeignKey(Doctor,on_delete=models.CASCADE)
+#     speciality = models.CharField(max_length=50,choices=SPECIALITY_TYPE)
+#     start_datetime = models.DateTimeField()
+#     end_datetime = models.DateTimeField()
+#     pat_name = models.CharField(max_length=200)
+#     pat_address = models.CharField(max_length=200)
+#     pat_contact = models.IntegerField()
+#     paid_amount = models.PositiveIntegerField()
+#     payment_status = models.CharField(max_length=20,choices = PAYMENT_STATUS)
+#     objects = models.Manager()
+
+#     def __str__(self):
+#         return f"{self.h_id}"
 
 
 #Creating signal,This is called when data is added into customuser so new row can be added in hospital,doctor,user,bloodbank.

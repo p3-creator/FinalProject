@@ -1,0 +1,151 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/appointment_form.css' %}">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+    <script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+    <script>
+        $(document).ready(function()
+        {
+            var $select_spec =$('#select_spec'),
+                $select_doc = $('#select_doc'),
+                $options = $select_doc.find('option');
+                $select_spec.on('change',function(){
+                   
+                    $select_doc.html($options.filter('[value="'+this.value+'"]'));
+                }).trigger('change') ;  
+        });
+
+    </script>
+    <title>Appointment Form</title>
+</head>
+<body>
+
+
+            
+
+    <div class="container">
+
+
+
+        <form class="register-email" action="#" method="POST">
+            {% csrf_token %}
+            <p class="register-text">Appointment Form</p>
+            <div>
+                <select name="category" value="category" class="select-box" id ="select_spec" required>
+
+                <!-- <option selected disabled ="true" required></option>
+
+                <label for="Speciality"><b>Choose Speciality</b></label> -->
+                 {% for spec in speciality_list %} 
+                 
+                   <option class= "option"  value="{{spec}}" >{{spec}}</option>
+                
+                   
+                 {% endfor %}
+                                            
+                </select>
+            </div>
+            <br>
+
+
+            <div>
+                <select name="category" value="category" class="select-box" id ="select_doc">
+
+                 {% if doctor %}
+                    {% for doc in doctor %}
+                   
+                    <option classs="option" value="{{doc.specialities}}">{{doc.admin.first_name}} {{doc.admin.last_name}}</h2>
+                    
+                    {% endfor %}
+                    
+                  {% endif %} 
+
+                </select>
+            </div>
+
+
+            
+
+            <div class="input-all">
+                <input type="text" placeholder="Name" name="name" required>
+            </div>
+
+    
+            <div class="row">
+
+                <div class="input-all">
+                    <input type="text" placeholder="Address" name="address" required>
+                </div>
+
+                <div class="input-all">
+                    <input type="tel" id="phone" placeholder="Phone Number" name="phone" pattern="[0-9]{10}" required>
+                </div>
+             <br>
+             <br>
+            </div>
+           
+             <div class="input-all">
+                <button class="register-btn">Proceed</button>
+            </div>
+        </form>
+    </div>
+
+  
+    
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <!-- {% for spec in speciality_list %}
+
+<h2>{{spec}}</h2>
+
+{% endfor %}
+
+{% if doctor %}
+{% for doc in doctor %}
+
+<h2>{{doc.specialities}} {{doc.admin.last_name}}</h2>
+
+{% endfor %}
+
+{% endif %}  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

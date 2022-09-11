@@ -1,0 +1,37 @@
+{% extends "useradmin_nav.html" %}
+{% load static %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet"  href="{% static 'css/show_doctors.css' %}">
+</head>
+<body>
+  <h2>View Doctors</h2>
+
+  {% block  logout %}
+  <a class="logout-btn" href="/logout_user">Logout</a>
+
+{% endblock logout %}
+
+ 
+
+  <div class="wrapper">
+     
+    <div class="container">
+       <div class="box">
+        <h1>Username : {{user.username}}</h1>
+        <h1>Email :  {{user.email}}</h1>
+
+     
+      </div>
+    </div>
+  </div>
+
+
+</body>
+</html>
+{% endblock %}

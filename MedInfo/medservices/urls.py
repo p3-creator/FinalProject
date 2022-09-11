@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import DoctorList,AppointmentList,AppointmentView
+# from .views import DoctorList,AppointmentList,AppointmentView
 
 urlpatterns = [
     path('', views.frontpage, name='medservice-frontpage'),
@@ -16,7 +16,7 @@ urlpatterns = [
     path('chooseregister/register_hospital/login/',views.loginView),
     path('doRegister_hospital',views.doRegister_hospital),
     path('doRegister_user',views.doRegister_user),
-    path('hospital_admin/add_doctor',views.add_doctor),
+    path('hospital_admin/add_doctor/<str:hos_id>',views.add_doctor),
     path('hospital_admin/show_doctors',views.show_doctors),
     path('hospital_admin/',views.hospital_admin),
     path('doctor_admin/',views.doctor_admin),
@@ -28,12 +28,16 @@ urlpatterns = [
     path('user_homepage/',views.user_homepage),
     path('get_user_detail',views.UserDetails),
     path('logout_user',views.logout_user),
+    path('user_profile/logout_user',views.logout_user),
     path('hospital_admin/logout_hospital',views.logout_hospital),
+     path('user_profile/profile_details',views.user_profile_details),
+
+    path('appointment_form/<str:h_id>',views.appointment_form,name="appointment_form"),
 
 
-    path('appointment_form/<str:h_id>',AppointmentView.as_view(),name='appointmentview'),
-    path('doctor_list',DoctorList.as_view(),name='DoctorList'),
-    path('appointment_list',AppointmentList.as_view(),name='AppointmentList'),
+    # path('appointment_form/<str:h_id>',AppointmentView.as_view(),name='appointmentview'),
+    # path('doctor_list',DoctorList.as_view(),name='DoctorList'),
+    # path('appointment_list',AppointmentList.as_view(),name='AppointmentList'),
 
 
 

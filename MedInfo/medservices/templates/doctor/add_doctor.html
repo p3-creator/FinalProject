@@ -32,8 +32,38 @@
            <label for="uname"><b>Doctor  Username</b></label>
            <input type="text" placeholder="Enter Doctor's Username" name="uname" id="uname" required>
 
-           <label for="speciality"><b>Speciality</b></label>
-           <input type="text" placeholder="Enter Speciality" name="speciality" id="speciality" required>
+           <!-- <label for="speciality"><b>Speciality</b></label>
+           <input type="text" placeholder="Enter Speciality" name="speciality" id="speciality" required> -->
+
+            <div>
+               <br>
+               <label for="speciality"><h4>Select speciality</h4></label>
+                <select name="category" value="category" class="select-box" id ="select_doc">
+                    {% for spec in speciality %}
+         
+                   
+                     <option class="option"  value="{{spec}}">{{spec}}</option>
+                     
+                     {% endfor %}
+                     <!-- <option class="option" value="ENT">ENT</option>
+                     <option class="option" value="Cardiology">Cardiology</option>
+                     <option class="option" value="Psychiatry">Psychiatry</option>
+                     <option class="option" value="Pathology">Pathology</option>
+                     <option class="option" value="Physiotherapy">Physiotherapy</option>
+                     <option class="option" value="Radiology">Radiology</option>
+                     <option class="option" value="Dental">Dental</option>
+                     <option class="option" value="Neurosurgery">Neurosurgery</option>
+                     <option class="option" value="Urology">Urology</option>
+                     <option class="option" value="Endocrinology">Endocrinology</option>
+                     <option class="option" value="Gynecology">Gynecology</option>
+                     <option class="option" value="Audiology">Audiology</option>
+                     <option class="option" value="Cancer">Cancer</option>
+                     <option class="option" value="Rheumatology">Rheumatology</option> -->
+                  
+
+                </select>
+            </div>
+
        
 
            <label for="education"><b>Education</b></label>
