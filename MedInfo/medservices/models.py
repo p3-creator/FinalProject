@@ -84,12 +84,30 @@ class User(models.Model):
         return f"{self.username}"
 
 
+class Appointment_timseslots(models.Model):
+    doctor_id = models.CharField(max_length=10)
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    objects = models.Manager()
+
+
+
+
+class booked_appointments(models.Model):
+    doctor_id = models.CharField(max_length=10)
+    patient_id = models.CharField(max_length=10)
+    appointment_slot_id = models.CharField(max_length=10)
+    status = models.BooleanField(default=False)
+
+
 class Appointment(models.Model):
     speciality = models.CharField(max_length=100)
     doctor = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
+    total_amount = models.PositiveIntegerField(default=100)
+    payment_completed = models.BooleanField(default=False,null=True,blank=True)
 
 # PAYMENT_STATUS = (
 #     ("paid","paid"),

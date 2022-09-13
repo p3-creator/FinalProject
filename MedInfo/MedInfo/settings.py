@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'medservices',
     'medservices.appointment_function',
+    
 ]
 
 MIDDLEWARE = [
@@ -72,6 +73,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'MedInfo.wsgi.application'
+
 
 
 # Database

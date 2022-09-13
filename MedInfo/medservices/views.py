@@ -7,7 +7,11 @@ from django.db.models import Q
 
 from medservices.EmailBackEnd import EmailBackEnd
 
-from .models import Hospital, Doctor
+from .models import Hospital, Doctor, Appointment
+from django.views.generic import View
+from django.urls import reverse
+from django.http import JsonResponse
+import requests
 # from django.views.generic import ListView, FormView
 # from .appointment_forms import AvailabilityForm
 # from  .appointment_function.availability import check_availability 
@@ -276,7 +280,7 @@ def search(request):
                               if CustomUser.objects.filter(username__icontains=name).exists():
                          
                                    admin = CustomUser.objects.filter(username__icontains=name)
-                                   lookups =  Q(admin__exact = admin) & Q(specialities__icontains=spec_type)
+                                   lookups =  Q(admin__icontainsA = admin) & Q(specialities__icontains=spec_type)
                              
 
                                    doc = Doctor.objects.filter(lookups)
@@ -389,8 +393,69 @@ def appointment_form(request,h_id):
       else:
             doctor = 'None'
 
-      context = {'speciality_list':specialities.split(","),'doctor':doctor}
+      context = {'hospital':hospital,'speciality_list':specialities.split(","),'doctor':doctor}
       return render(request,"appointment_form.html",context)
+
+
+
+def appointment_form_save(request):
+      speciality = request.POST.get("category")
+      doctor = request.POST.get("doc_category")
+      name = request.POST.get("name")
+      address = request.POST.get("address")
+      phone = request.POST.get("phone")
+      total_amount =  request.POST.get("amount")
+      appointment = Appointment.objects.create(speciality=speciality,doctor=doctor,name=name,address=address,phone=phone,total_amount=total_amount)
+      appointment.save()
+      
+      return redirect(reverse("khaltirequest") + "?appointment_id=" + str(appointment.id) )
+      
+
+
+
+class KhaltiRequestView(View):
+      def get(self, request, *args, **kwargs):
+            appointment_id = request.GET.get("appointment_id")
+            appointment = Appointment.objects.get(id=appointment_id)
+            context = {
+                 "appointment":appointment
+            }
+            return render(request,"khaltirequest.html",context)
+
+
+
+class KhaltiVerifyView(View):
+      def get(self,request, *args, **kwargs):
+            token = request.GET.get("token")
+            amount = request.GET.get("total_amount")
+            appointment_id = request.GET.get("appointment_id")
+            print(token, amount, appointment_id)
+
+            url = "https://khalti.com/api/v2/payment/verify/"
+            payload = {
+            "token": token,
+            "amount": amount
+            }
+            headers = {
+            "Authorization": "Key test_secret_key_66d939087cab49cf8b6efab1b4d1d61b"
+            }
+
+            appointment_obj = Appointment.objects.get(id = appointment_id)
+
+            response = requests.post(url, payload, headers = headers)
+
+            resp_dict = response.json()
+            if resp_dict.get("idx"):
+                  success = True
+                  appointment_obj.payment_completed = True
+                  appointment_obj.save()
+            else:
+                  success = False
+
+            data = {
+                  "success": success
+            }
+            return JsonResponse(data)
 
 
 

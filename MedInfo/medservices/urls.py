@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 # from .views import DoctorList,AppointmentList,AppointmentView
+from .views import KhaltiRequestView, KhaltiVerifyView
 
 urlpatterns = [
     path('', views.frontpage, name='medservice-frontpage'),
@@ -32,7 +33,20 @@ urlpatterns = [
     path('hospital_admin/logout_hospital',views.logout_hospital),
      path('user_profile/profile_details',views.user_profile_details),
 
+
+     
+
     path('appointment_form/<str:h_id>',views.appointment_form,name="appointment_form"),
+
+    path('appointment_form_save/', views.appointment_form_save, name="appointment_form_save"),
+
+    path('khalti-request/',KhaltiRequestView.as_view(),name="khaltirequest"),
+
+    path('khalti-verify/',KhaltiVerifyView.as_view(), name="khaltiverify"),
+
+
+
+    # path('appointment_form/<str:h_id>/khalti-request',KhaltiRequestView.as_view(),name="khaltirequest"),
 
 
     # path('appointment_form/<str:h_id>',AppointmentView.as_view(),name='appointmentview'),

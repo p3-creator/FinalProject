@@ -32,7 +32,7 @@
 
 
 
-        <form class="register-email" action="#" method="POST">
+        <form class="register-email" method="POST" action="/appointment_form_save/" >
             {% csrf_token %}
             <p class="register-text">Appointment Form</p>
             <div>
@@ -54,7 +54,7 @@
 
 
             <div>
-                <select name="category" value="category" class="select-box" id ="select_doc">
+                <select name="doc_category" value="doc_category" class="select-box" id ="select_doc">
 
                  {% if doctor %}
                     {% for doc in doctor %}
@@ -84,6 +84,10 @@
 
                 <div class="input-all">
                     <input type="tel" id="phone" placeholder="Phone Number" name="phone" pattern="[0-9]{10}" required>
+                </div>
+
+                <div class="input-all">
+                    <input type="number" placeholder="Total Amount" name="amount" required>
                 </div>
              <br>
              <br>
