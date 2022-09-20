@@ -15,19 +15,46 @@
        <form class="register-email" action="/doRegister_user" method="POST">
         {% csrf_token %}
            <p class="register-text">Create User Account</p>
+
+        <div class="row">
+            <div class="input-all">
+                <input type="text" placeholder="First Name" name ="firstname" required>
+            </div> 
+
+            <div class="input-all">
+                <input type="text" placeholder="Last name" name ="lastname" required>
+            </div> 
+        </div>
           
            <div class="input-all">
                <input type="text" placeholder="Username" name ="username" required>
            </div> 
-           <div class="input-all">
-               <input type="email" placeholder="Email" name="email" required>
-           </div> 
-           <div class="input-all">
-            <input type="password" placeholder="Password" name="password" required>
+
+        <div class="row">
+        
+                <div class="input-all">
+                    <input type="tel" id="phone" placeholder="Phone Number" name="phone" pattern="[0-9]{10}" required>
+                </div>
+
+                <div class="input-all">
+                    <input type="text" placeholder="Address" name="address" required>
+                </div>
+   
+        
+        </div>
+        
+        <div class="input-all">
+            <input type="email" placeholder="Email" name="email" required>
         </div> 
+
+        <div class="input-all">
+        <input type="password" placeholder="Password" name="password" required>
+        </div>
+
         <div class="input-all">
             <input type="password" placeholder="Confirm Password" name="cpassword" required>
-        </div> 
+        </div>
+
         <div class="input-all">
             <button class="register-btn">Register</button>
         </div>

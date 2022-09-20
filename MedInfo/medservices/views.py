@@ -7,11 +7,13 @@ from django.db.models import Q
 
 from medservices.EmailBackEnd import EmailBackEnd
 
-from .models import Hospital, Doctor, Appointment
+from .models import Hospital, Doctor,User, Appointment_timeslots
 from django.views.generic import View
 from django.urls import reverse
 from django.http import JsonResponse
 import requests
+
+
 # from django.views.generic import ListView, FormView
 # from .appointment_forms import AvailabilityForm
 # from  .appointment_function.availability import check_availability 
@@ -103,7 +105,11 @@ def doRegister_user(request):
         if request.method != "POST":
             return HttpResponse("<h2>Method not allowed</h2>")
         else:
-            name = request.POST.get("username")
+            firstname = request.POST.get("firstname")
+            lastname = request.POST.get("lastname")
+            address = request.POST.get("address")
+            username = request.POST.get("username")
+            phone = request.POST.get("phone")
             email = request.POST.get("email")
             password = request.POST.get("password")
             cpassword = request.POST.get("cpassword")
@@ -112,12 +118,14 @@ def doRegister_user(request):
                     return HttpResponse("Email Already Exists!")
             else:
                   #if CustomUser.objects.filter(username=name , user_type = 5):
-                  if CustomUser.objects.filter(username=name).count()>0:
+                  if CustomUser.objects.filter(username=username).count()>0:
                      return HttpResponse("Username Already Exists!!Try something new!")
                   else:
 
                         if password == cpassword:
-                              user = CustomUser.objects.create_user(username=name,email=email,password=password,user_type=5)
+                              user = CustomUser.objects.create_user(first_name=firstname,last_name=lastname,username=username,email=email,password=password,user_type=5)
+                              user.user.address = address
+                              user.user.phone = phone
                               user.save()
                               return HttpResponseRedirect("login/")
                         else: 
@@ -160,8 +168,9 @@ def doLogin(request):
                if user.user_type== "2":
                          return HttpResponseRedirect("doctor_admin/")
 
-            #    if user.user_type==3:
-            #             return HttpResponseRedirect('#')
+               if user.user_type == "3":
+                         return HttpResponseRedirect("pharmacy_admin/")
+
             #    if user.user_type==4:
             #             return HttpResponseRedirect('#')
 
@@ -255,6 +264,12 @@ def search(request):
             category = request.POST.get("category")
             name   = request.POST.get("name")
             spec_type = request.POST.get("type")
+            
+            logged_in_user = None
+            username =None
+            if request.session.get('user_id'):
+                  logged_in_user = request.session.get('user_id')
+                  user = CustomUser.objects.get(id=logged_in_user)
            
       
             if   name != '' and spec_type != '':
@@ -268,11 +283,19 @@ def search(request):
                                     admin = CustomUser.objects.get(username__icontains=name)
                                     lookups = Q(address__icontains=loc) & Q(admin__exact=admin)  & Q(specialities__icontains=spec_type)
                                  
-                                          
                                     hos = Hospital.objects.filter(lookups)
-                                    return render(request,'user_homepage.html',{"hospitals": hos})
+
+                                    context = {
+                                          'logged_in_user':logged_in_user,
+                                          'hospitals':hos
+                                    }      
+                                    hos = Hospital.objects.filter(lookups)
+                                    return render(request,'user_homepage.html',context)
                               else:
-                                    context = {"Search Failed.No such searches found!"}
+                                    context = {
+                                          'result':"Search Failed.No such searches found!",
+                                          'logged_in_user':logged_in_user
+                                          }
                                     return render(request,'user_homepage.html',context)
 
 
@@ -284,13 +307,20 @@ def search(request):
                              
 
                                    doc = Doctor.objects.filter(lookups)
+                                   context = {
+                                          'logged_in_user':logged_in_user,
+                                          'doctors':doc
+                                    } 
                                   
                                
                                   # hos = Hospital.objects.filter(admin = doc.hospital_id)
                                    #name = hos.admin.username
-                                   return render(request,'user_homepage.html',{"doctors": doc})
+                                   return render(request,'user_homepage.html',context)
                               else:
-                                    context = {"Search Failed.No such searches found!"}
+                                    context = {
+                                          'result':"Search Failed.No such searches found!",
+                                          'logged_in_user':logged_in_user
+                                          }
                                     return render(request,'user_homepage.html',context)
 
                   
@@ -305,10 +335,21 @@ def search(request):
                         #    lookup = Q(specialities_icontains=spec_type)
                         #    print(lookups)
                            hos = Hospital.objects.filter(lookups)
+
+                           context = {
+                                          'logged_in_user':logged_in_user,
+                                          'hospitals':hos
+                                    }   
+
                            #hos = Hospital.objects.filter(address=loc,admin=admin,specialities = spec_type)
-                           return render(request,'user_homepage.html',{"hospitals": hos})
+                           return render(request,'user_homepage.html',context)
                      else:
-                             return HttpResponse('no such hospital')
+                              context = {
+                                    'logged_in_user':logged_in_user,
+                                    'result':'No results match your search',
+
+                                    }
+                              return render(request,'user_homepage.html',context)
             
             elif spec_type != '':
                     
@@ -316,12 +357,20 @@ def search(request):
                         #    lookup = Q(specialities_icontains=spec_type)
                         #    print(lookups)
                            hos = Hospital.objects.filter(lookups)
+                           context = {
+                                          'logged_in_user':logged_in_user,
+                                          'hospitals':hos
+                                    } 
                            #hos = Hospital.objects.filter(address=loc,admin=admin,specialities = spec_type)
-                           return render(request,'user_homepage.html',{"hospitals": hos})
+                           return render(request,'user_homepage.html',context)
 
             else:
-                  context = 'No results match your search'
-                  return render(request,'user_homepage.html',{"context":context})
+                  context = {
+                        'logged_in_user':logged_in_user,
+                        'result':'No results match your search',
+
+                  }
+                  return render(request,'user_homepage.html',context)
 
                      
             # hos = Hospital.objects.filter(address=loc)
@@ -382,33 +431,73 @@ def delete_doctor_save(request):
             messages.success(request,"Successfully Deleted Doctor")
             return HttpResponseRedirect('hospital_admin/')  
 
+def manage_doc_timeslot(request,doctor_id):
+        doctor = Doctor.objects.get(admin_id = doctor_id)
+        return render(request, 'doctor/manage_doc_timeslot.html',{"doctor":doctor})
+
+def save_doc_timeslot(request):
+      start_time = request.POST.get("start_time")
+      end_time = request.POST.get("end_time")
+      time_slot = request.POST.get("time_slot")
+      doctor_id = request.POST.get("d_id")
+      doctor_object = Doctor.objects.get(admin = doctor_id)
+    
+      
+      
+      
+      if end_time > start_time:
+            appointment_timings = Appointment_timeslots.objects.create(start_time=start_time, end_time=end_time, time_slot=time_slot, doctor_id=doctor_object)
+            appointment_timings.save()
+            messages.success(request,"timing added successfully")
+            return HttpResponseRedirect('/hospital_admin/') 
+      else:
+            messages.error(request,"Please check your end time and try again ")
+            return  HttpResponseRedirect('/hospital_admin/manage_timeslot/'+doctor_id)
+
 
 
 def appointment_form(request,h_id):
+      patient_id = request.session.get('user_id')
+      patient = User.objects.get(admin = patient_id)
       hospital = Hospital.objects.get(admin = h_id)
       specialities = hospital.specialities
       if Doctor.objects.filter(hospital_id = h_id).exists():
           doctor = Doctor.objects.filter(hospital_id = h_id)
+          appointment_time = Appointment_timeslots.objects.all()
+
+          print(appointment_time)
         
       else:
             doctor = 'None'
+            appointment_time = 'None'
 
-      context = {'hospital':hospital,'speciality_list':specialities.split(","),'doctor':doctor}
+      context = {'hospital':hospital,'speciality_list':specialities.split(","),'doctor':doctor,'patient':patient, 'appointment_time':appointment_time}
       return render(request,"appointment_form.html",context)
 
 
 
-def appointment_form_save(request):
-      speciality = request.POST.get("category")
-      doctor = request.POST.get("doc_category")
-      name = request.POST.get("name")
-      address = request.POST.get("address")
-      phone = request.POST.get("phone")
-      total_amount =  request.POST.get("amount")
-      appointment = Appointment.objects.create(speciality=speciality,doctor=doctor,name=name,address=address,phone=phone,total_amount=total_amount)
-      appointment.save()
+# def appointment_form_save(request):
+#       speciality = request.POST.get("category")
+#       doctor = request.POST.get("doc_category")
+#       name = request.POST.get("name")
+#       address = request.POST.get("address")
+#       phone = request.POST.get("phone")
+#       total_amount =  request.POST.get("amount")
+#       appointment = Appointment.objects.create(speciality=speciality,doctor=doctor,name=name,address=address,phone=phone,total_amount=total_amount)
+#       appointment.save()
       
-      return redirect(reverse("khaltirequest") + "?appointment_id=" + str(appointment.id) )
+#       return redirect(reverse("khaltirequest") + "?appointment_id=" + str(appointment.id) )
+
+
+def appointment_choosedatetime(request):
+      patient_id = request.session.get('user_id')
+      patient = User.objects.get(admin = patient_id)
+      speciality = request.POST.get('category_spec')
+      doctor_name = request.POST.get('select_sel_doc')
+      hospital_id = request.POST.get('h_id')
+    
+      print(doctor_name)
+      return HttpResponse("good")
       
 
 
@@ -459,6 +548,15 @@ class KhaltiVerifyView(View):
 
 
 
+
+
+
+
+
+
+def pharmacy_admin(request):
+     
+      return render(request,'pharmacy/pharmacy_admin.html') 
 
 
 

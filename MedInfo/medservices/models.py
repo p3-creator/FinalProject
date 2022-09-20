@@ -1,7 +1,11 @@
 from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser 
+import datetime
+
+
+# from datetime import datetime,date
 
 class CustomUser(AbstractUser):
     user_type = ((1,"Hospital"),(2,"Doctor"),(3,"Pharmacy"),(4,"BloodBank"),(5,"User"))
@@ -75,6 +79,8 @@ class Blood_bank(models.Model):
 class User(models.Model):
     id=models.AutoField(primary_key=True)
     admin = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
+    address=models.CharField(max_length=250,default="")
+    phone = models.PositiveIntegerField(default=0)
     # name = models.CharField(max_length=250)
     # email = models.CharField(max_length=250)
     # password = models.CharField(max_length=50)
@@ -84,30 +90,44 @@ class User(models.Model):
         return f"{self.username}"
 
 
-class Appointment_timseslots(models.Model):
-    doctor_id = models.CharField(max_length=10)
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+class Appointment_timeslots(models.Model):
+    doctor_id = models.ForeignKey(Doctor,on_delete=models.CASCADE)
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    time_slot = models.PositiveIntegerField(default=15)
     objects = models.Manager()
-
+    
+    def __str__(self):
+        return f"{self.doctor_id}"
 
 
 
 class booked_appointments(models.Model):
-    doctor_id = models.CharField(max_length=10)
+    doctor_id = models.ForeignKey(Doctor,on_delete=models.PROTECT)   #edit this on_delete by seeing parameters for it
     patient_id = models.CharField(max_length=10)
-    appointment_slot_id = models.CharField(max_length=10)
+    date = models.DateField(default=datetime.date.today)
+    appointment_slot_id = models.ForeignKey(Appointment_timeslots,on_delete=models.CASCADE)    #edit this on_delete not cascade at least
     status = models.BooleanField(default=False)
-
-
-class Appointment(models.Model):
     speciality = models.CharField(max_length=100)
-    doctor = models.CharField(max_length=100)
-    name = models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
-    phone = models.CharField(max_length=100)
-    total_amount = models.PositiveIntegerField(default=100)
-    payment_completed = models.BooleanField(default=False,null=True,blank=True)
+    objects = models.Manager()
+
+    def __str__(self):
+        return f"{self.patiend_id}"
+
+
+# class Appointment(models.Model):
+#     speciality = models.CharField(max_length=100)
+#     doctor = models.CharField(max_length=100)
+#     date = models.DateField(default=datetime.date.today)
+#     time_slot = models.TimeField(auto_now=False,auto_now_add=False,default=0)
+#     name = models.CharField(max_length=100)
+#     address = models.CharField(max_length=100)
+#     phone = models.CharField(max_length=100)
+#     total_amount = models.PositiveIntegerField(default=100)
+#     payment_completed = models.BooleanField(default=False,null=True,blank=True)
+
+#     def __str__(self):
+#         return f"{self.speciality}"
 
 # PAYMENT_STATUS = (
 #     ("paid","paid"),
@@ -169,6 +189,23 @@ def save_user_profile(sender,instance,**kwargs):
         if instance.user_type==5:
             instance.user.save()
 
+
+
+
+
+
+
+
+###############PHARMACY#####################################################
+class Pharmacy(models.Model):
+    admin = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
+    #name = models.CharField(max_length=200)
+    district = models.CharField(max_length=200)
+    address = models.CharField(max_length=200)
+    pranali = models.CharField(max_length=200)
+    pharmacy_type = models.CharField(max_length=200)
+    prescription_type = models.CharField(max_length=200)
+    objects = models.Manager()
 
 
 

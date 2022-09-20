@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Doctor Timeslot</title>
+</head>
+<body>
+
+    <div>
+        {% block body %}
+
+        <div style="margin-top:90px;margin-left:280px;">
+            {% if messages %}
+            <ul class="messages">
+            {% for msg in messages %}
+            {% if msg.tags == 'error' %}
+            
+            <div class="alert alert-{{msg.tags}}" role="alert" style="margin: 10px;border:solid red;border-radius: 10px;color:black;padding:6px">
+            {{msg.message}}
+            </div>
+            {% endif %}
+            
+            {% if msg.tags == 'success' %}
+            
+            <div class="alert alert-{{msg.tags}}" role="alert" style="margin: 15px;background-color: rgb(72, 255, 0);border:solid black;border-radius: 10px;color:rgb(77, 18, 241);padding:6px">
+            {{msg.message}}
+            </div>
+            {% endif %}
+            
+            {% endfor %}
+            </ul>
+            {% endif %}
+         </div>
+          
+        
+        
+        {% endblock %}
+
+    </div>
+
+
+    <div class="container">
+        <form class="doctor_timeslot" method="POST" action="save_doc_timeslot/">
+            <p class="text">Add Doctor Timse Slot</p>
+            {% csrf_token %}
+            <div class="input-all">
+                <input type="time" placeholder="Enter  start time" name ="start_time" required>
+                <input type="hidden"  name ="d_id" value="{{doctor.admin.id}}" required>
+            </div> 
+
+
+            <div class="input-all">
+                <input type="time" placeholder="Enter end time" name ="end_time" required>
+            </div>
+            
+            <div class="input-all">
+                <input type="integer" placeholder="Enter time slot(in minutes)" name ="time_slot" required>
+            </div> 
+              
+            
+            <div class="input-all">
+                <button class="add-btn">Add doctor appointment shift</button>
+            </div>
+           </form>
+        </div>
+</body>
+</html>

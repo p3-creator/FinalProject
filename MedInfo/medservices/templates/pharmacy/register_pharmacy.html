@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <link rel="stylesheet"  href="{% static 'css/registerpharmacy.css' %}">
+
+    <title>Hospital Registration Form</title>
+</head>
+<body>
+    <div class="container">
+       <form class="register-email" method="POST" action="/doRegister_pharmacy">
+           <p class="register-text">Pharmacy Account Creation</p>
+
+           <div class="input-all">
+            <input type="text" placeholder="Name of your Pharmacy" name ="name" required>
+        </div> 
+          
+        <div class="row">
+                <div class="input-all">
+                    <input type="text" placeholder="District" name="district" required>
+                </div> 
+
+                <div class="input-all">
+                    <input type="text" placeholder="Address" name="address" required>
+                </div> 
+        </div> 
+
+        <div class="row">
+             
+               <!-- <div class="select-box">
+              
+                   <div class="options-container"> 
+                        
+                            <div class="option">
+                                <input type="radio" class="radio" id="allopathy" name="category"/>
+                                <label for="allopathy">Allopathy</label>
+                                </div>
+
+                                <div class="option">
+                                    <input type="radio" class="radio" id="veterenary" name="category"/>
+                                    <label for="veterenary">Veterenary</label>
+                                    </div>
+
+                                    <div class="option">
+                                        <input type="radio" class="radio" id="ayurvedic" name="category"/>
+                                        <label for="ayurvedic">Ayurvedic</label>
+                                        </div>
+                            </div>
+                            <div class="selected">
+                                Pranali
+                                 <input type="text" placeholder="Pranali" name="type" required/> 
+                            </div>
+                </div> -->
+               
+
+                <select name="category" value="category"  name="pranali" class="select-box" required >  
+                    <option selected disabled="true" class="sel-label" value="">Select Pranali</option>        
+                    <option class= "option"  value="Allopathy">Allopathy</option>
+                    <option class="option"  value="Veterenary">Veterenary</option>
+                    <option class="option"  value="Ayurvedic">Ayurvedic</option>
+              
+                </select>
+
+                <select name="category" value="category"  name="prescription_type" class="select-box" required >  
+                    <option selected disabled="true" class="sel-label" value="">Select Prescription Type</option>        
+                    <option class= "option"  value="क">क</option>
+                    <option class="option"  value="ख">ख</option>
+                    <option class="option"  value="ग">ग</option>
+              
+                </select>
+
+        
+
+           <!-- <div class="select-box">
+              
+                <div class="options-container"> 
+                     
+                         <div class="option">
+                             <input type="radio" class="radio" id="wholesale" name="category"/>
+                             <label for="wholesale">Wholesale</label>
+                             </div>
+
+                             <div class="option">
+                                 <input type="radio" class="radio" id="retail" name="category"/>
+                                 <label for="retail">Retail</label>
+                                 </div>
+
+                                 
+                         </div>
+                         <div class="selected">
+                             Type
+                              <input type="text" placeholder="Type" name="type" required/> 
+                         </div>
+             </div> 
+
+            -->
+
+            <select name="category" value="category"  name="type" class="select-box" required>
+                <option selected disabled="true" class="sel-label" value="">Select Type</option>                    
+                <option class= "option"  value="Wholesale">Wholesale</option>
+                <option class="option"  value="Retail">Retail</option>
+                
+          
+            </select>
+
+           </div> 
+           <br>
+ 
+        
+                <div class="input-all">
+                    <input type="email" placeholder="Email" name="email" required>
+                </div>
+    
+                    
+       
+                
+           <div class="input-all">
+            <input type="password" placeholder="Password" name="password" required>
+        </div> 
+        <div class="input-all">
+            <input type="password" placeholder="Confirm Password" name="cpassword" required>
+        </div> 
+
+        <div class="input-all">
+            <button class="register-btn">Register</button>
+        </div>
+        <p  class="login-text">Have an account? <a href="login.html">Login Here</a></p>
+       </form>
+    </div>
+
+</body>
+</html>

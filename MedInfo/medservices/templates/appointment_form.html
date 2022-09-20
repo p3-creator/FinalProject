@@ -15,12 +15,23 @@
                 $select_doc = $('#select_doc'),
                 $options = $select_doc.find('option');
                 $select_spec.on('change',function(){
-                   
+                    console.log($select_spec);
                     $select_doc.html($options.filter('[value="'+this.value+'"]'));
-                }).trigger('change') ;  
+                }).trigger('change') ; 
+                
+
         });
 
+            $("#select_doc").on("change", function(){
+                var $select_sel_doc = $('#select_sel_doc'),
+                    $selectedValue = $(this).text();
+                    $select_sel_doc.html(selectedValue);
+                    }).trigger('change');
+
+                
+
     </script>
+  
     <title>Appointment Form</title>
 </head>
 <body>
@@ -32,11 +43,13 @@
 
 
 
-        <form class="register-email" method="POST" action="/appointment_form_save/" >
-            {% csrf_token %}
+        <form class="register-email" action="appointment_choosedatetime/" method="POST">
             <p class="register-text">Appointment Form</p>
+            {% csrf_token %}
+            <input type="hidden" name ="h_id" id="h_id" value = {{hospital.admin_id}}>
+            
             <div>
-                <select name="category" value="category" class="select-box" id ="select_spec" required>
+                <select name="category_spec" value="category" class="select-box" id ="select_spec" required>
 
                 <!-- <option selected disabled ="true" required></option>
 
@@ -51,16 +64,21 @@
                 </select>
             </div>
             <br>
+            
+           
+           
 
 
             <div>
-                <select name="doc_category" value="doc_category" class="select-box" id ="select_doc">
+                <select name="category_doc" value="category" class="select-box" id ="select_doc" required>
+
 
                  {% if doctor %}
+                 
                     {% for doc in doctor %}
-                   
-                    <option classs="option" value="{{doc.specialities}}">{{doc.admin.first_name}} {{doc.admin.last_name}}</h2>
                     
+                      <option class= "option"  value="{{doc.specialities}}">{{doc.admin.first_name}} {{doc.admin.last_name}}</option>
+        
                     {% endfor %}
                     
                   {% endif %} 
@@ -68,22 +86,45 @@
                 </select>
             </div>
 
+            
+
+<!--
+            
+                <div class="input-all">
+                <input type="date" placeholder="Enter Date" name="date" required>
+            </div>
+
+            <div>
+                <select name="timeslot" value="timeslot" class="select-box" id ="select_appointment">
+
+                 {% if appointment_time %}
+                     {% for app in appointment_time %}
+                        
+                    
+                        <option class= "option" value="{{app.doctor_id.admin.first_name}} {{app.doctor_id.admin.last_name}}">{{app.start_time}}-{{app.end_time}}-{{app.time_slot}}</option>
+                        
+                     {% endfor %}
+                        
+                  {% endif %} 
+
+                </select>
+            </div>
 
             
 
             <div class="input-all">
-                <input type="text" placeholder="Name" name="name" required>
+                <input type="text"  name="name" readonly value=" patient name : {{patient.admin.first_name}} {{patient.admin.last_name}}">
             </div>
 
     
             <div class="row">
 
                 <div class="input-all">
-                    <input type="text" placeholder="Address" name="address" required>
+                    <input type="text" placeholder="Address" name="address" value = "address : {{patient.address}}">
                 </div>
 
                 <div class="input-all">
-                    <input type="tel" id="phone" placeholder="Phone Number" name="phone" pattern="[0-9]{10}" required>
+                    <input type="tel" id="phone" placeholder="Phone Number" name="phone" value = "phone number : {{patient.phone}}">
                 </div>
 
                 <div class="input-all">
@@ -91,10 +132,11 @@
                 </div>
              <br>
              <br>
-            </div>
+            </div> 
+        -->
            
              <div class="input-all">
-                <button class="register-btn">Proceed</button>
+                <button class="register-btn">Proceed to next step</button>
             </div>
         </form>
     </div>

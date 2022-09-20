@@ -71,11 +71,23 @@ a.btn1{
 }
 
 a.btn2{
-    color: rgb(126, 76, 15);
+    color: rgb(242, 242, 242);
     font-weight: 600;
     padding:10px;
     border: rgb(4, 36, 37);
-    background: rgb(196, 62, 9);
+    background: rgb(196, 9, 9);
+    font-size: 15px;
+    margin-top: 10px;
+    border-radius: 7px;
+    text-decoration: none;
+}
+
+a.btn3{
+    color: rgb(71, 233, 22);
+    font-weight: 600;
+    padding:10px;
+    border: rgb(4, 36, 37);
+    background: rgb(146, 52, 105);
     font-size: 15px;
     margin-top: 10px;
     border-radius: 7px;

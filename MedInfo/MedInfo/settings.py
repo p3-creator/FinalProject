@@ -132,7 +132,7 @@ AUTH_USER_MODEL = 'medservices.CustomUser'
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,"static")
+    os.path.join(BASE_DIR,"medservices/static")
 ]
 
 #Registering EmailBackend
