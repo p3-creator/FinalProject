@@ -1,0 +1,10 @@
+.wrapper_app{
+    margin:100px 10px 10px 300px;
+    background-color:#ae91a6;
+    border-radius: 10px;
+}
+
+h1{
+    color:snow;
+    padding:20px;
+}

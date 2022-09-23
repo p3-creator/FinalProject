@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/add_doc_timeshift.css' %}">
+    <title>Add Doctor Timeslot</title>
+</head>
+<body>
+    <div class="container">
+        <form class="doctor_timeslot" method="POST" action="save_doc_timeslot/">
+            <p class="text">Add Doctor Time Slot</p>
+            {% csrf_token %}
+            <div class="input-all">
+                <label for="start_time"><b>Select start time:</b></label>
+                <br>
+                <input type="time"  name ="start_time" required>
+              
+              
+            </div> 
+            <input type="hidden"  name ="d_id" value="{{doctor.admin.id}}" required>
+
+            <div class="input-all">
+                <label for="end_time"><b>Select end time:</b></label>
+                <br>
+                <input type="time" name ="end_time" required>
+            </div>
+            
+            <div class="input-all">
+                <label for="end_time"><b>Enter time slot(in minutes):</b></label>
+                <br>
+                <input type="integer"  name ="time_slot" required>
+            </div> 
+              
+            
+            <div class="input-all">
+                <button class="add-btn">Add doctor appointment shift</button>
+            </div>
+
+            {% if messages %}
+            <ul class="messages">
+            {% for msg in messages %}
+            
+            <div class="alert alert-{{msg.tags}}" role="alert" style="margin: 10px;border:solid red;border-radius: 10px;color:black;padding:6px">
+            {{msg.message}}
+            </div>
+            
+            {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+           </form>
+        </div>
+</body>
+</html>

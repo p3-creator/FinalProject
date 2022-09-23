@@ -13,29 +13,61 @@
         {
             var $select_spec =$('#select_spec'),
                 $select_doc = $('#select_doc'),
+               // $selected_doc = $('#selected_doc')
                 $options = $select_doc.find('option');
                 $select_spec.on('change',function(){
-                    console.log($select_spec);
-                    $select_doc.html($options.filter('[value="'+this.value+'"]'));
+                   
+                 $myres = $select_doc.html($options.filter('[value="'+this.value+'"]'));
+                console.log($myres.text())
+            // $selected_doc.text($myres.text())
                 }).trigger('change') ; 
-                
 
+                
+                
         });
 
-            $("#select_doc").on("change", function(){
-                var $select_sel_doc = $('#select_sel_doc'),
-                    $selectedValue = $(this).text();
-                    $select_sel_doc.html(selectedValue);
-                    }).trigger('change');
+        $(document).ready(function()
+        {
+            var $select_spec =$('#select_spec'),
+                $select_doc_id = $('#select_doc_id'),
+                $selected_doc = $('#selected_doc')
+                $options = $select_doc_id.find('option');
+                $select_spec.on('change',function(){
+                
+                 $res = $select_doc_id.html($options.filter('[value="'+this.value+'"]'));
+                 console.log($res.text())
+             $selected_doc.text($res.text())
+                }).trigger('change') ; 
 
                 
+                
+        });
+
+        
+
+
+
+      
 
     </script>
-  
     <title>Appointment Form</title>
 </head>
 <body>
 
+    <nav>
+        <label class="logo">MedInfo</label>
+        <ul>
+            {% if patient %}
+              <li><a class="username">Welcome {{patient.admin.username}}</a></li>
+                <li><a href="/user_profile">View Profile</a></li>
+              <li><a href="/logout_user" class="right">Logout</a></li>
+            {% else %}
+                <li><a href="/chooseregister">Register</a></li>
+                <li><a href="/login">Login</a></li>
+            {% endif %}
+
+        </ul>
+    </nav>
 
             
 
@@ -65,32 +97,43 @@
             </div>
             <br>
             
-           
-           
-
 
             <div>
                 <select name="category_doc" value="category" class="select-box" id ="select_doc" required>
 
-
                  {% if doctor %}
-                 
                     {% for doc in doctor %}
-                    
-                      <option class= "option"  value="{{doc.specialities}}">{{doc.admin.first_name}} {{doc.admin.last_name}}</option>
-        
+                   
+                    <option class= "option"  value="{{doc.specialities}}">{{doc.admin.first_name}} {{doc.admin.last_name}}</option>
+                  
+                   
                     {% endfor %}
                     
                   {% endif %} 
 
                 </select>
+
+                <select name="category_doc" value="category" class="select-box" id ="select_doc_id" required>
+
+                    {% if doctor %}
+                       {% for doc in doctor %}
+                      
+                       <option class= "option"  value="{{doc.specialities}}">{{doc.id}}</option>
+                     
+                      
+                       {% endfor %}
+                       
+                     {% endif %} 
+   
+                   </select>
+                
             </div>
 
-            
+            <textarea type="text" name="doc" id="selected_doc"></textarea>
+           
 
-<!--
-            
-                <div class="input-all">
+
+            <!-- <div class="input-all">
                 <input type="date" placeholder="Enter Date" name="date" required>
             </div>
 
@@ -132,12 +175,26 @@
                 </div>
              <br>
              <br>
-            </div> 
-        -->
+            </div> -->
            
              <div class="input-all">
                 <button class="register-btn">Proceed to next step</button>
             </div>
+
+            <div>
+                {% if messages %}
+                   <ul class="messages">
+                   {% for msg in messages %}
+                   
+                   <div class="alert alert-{{msg.tags}}" role="alert" style="margin: 10px;border:solid red;border-radius: 10px;color:black;padding:6px">
+                   {{msg.message}}
+                   </div>
+                   
+                   {% endfor %}
+                   </ul>
+                   {% endif %}
+               </div>
+               
         </form>
     </div>
 

@@ -1,0 +1,32 @@
+{% extends "hospitaladmin_nav.html" %}
+
+
+
+{% block body %}
+
+            
+
+<div class="wrapper_profile">
+     
+    <div class="container_profile">
+       <div class="box_profile">
+        <h1>Hospital Name : {{hospital.admin.username}}</h1>
+        <h1>Phone Number :  {{hospital.phone_number}}</h1>
+        <h1>Specialities: {{hospital.specialities}}</h1>
+        <h1>district: {{hospital.district}}</h1>
+        <h1>Address :  {{hospital.address}}</h1>
+     
+       <!-- <a href="mapIn"> <button style = "border:solid 2px black;height:40px;color:black;margin:5px 0 10px 20px;background:aqua ">Add Map</button></a> -->
+      </div>
+    </div>
+
+    {% endblock %}
+
+
+
+    description = models.TextField()
+     phone_number = models.TextField()
+     district = models.CharField(max_length=250)
+     address=models.CharField(max_length=250)
+     website=models.CharField(max_length=250)
+     specialities = models.TextField()

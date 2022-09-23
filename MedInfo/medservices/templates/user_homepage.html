@@ -28,16 +28,16 @@
     <div id="main-content" class="container">
 
         <form class="search" action="/search_options" method="POST">
-
+            <h1> Search Hospitals</h1>
             <div class="row">
-
+               
                 {% csrf_token %}
                 <div class="input_all">
                     <input type="text" class="search_location" placeholder="Location(Required)" name="location"
                         required>
                 </div>
 
-
+                
 
 
                 <!-- <div class="select-menu">
@@ -51,14 +51,14 @@
 
 
 
-
+<!-- 
 
                             <select name="category" value="category" class="select-box">
                                    
                                 <option class= "option"  value="Hospitals">Hospitals</option>
                                 <option class="option"  value="Doctors">Doctors</option>
                           
-                            </select>
+                            </select> -->
 
 
 
@@ -88,6 +88,7 @@
 
 
 
+
     <div class="row-result">
 
         {% if hospitals %}
@@ -95,7 +96,7 @@
 
         <div class="wrapper">
 
-            <div class="container">
+            <div class="container_search">
                 <div class="box">
                     <h1>Hospital Name : {{hos.admin.username}}</h1>
                     <h1>Hospital Description : {{hos.description}}</h1>
@@ -105,9 +106,9 @@
 
                     <br>
 
-                    <a href="#" class="btn1">View More</a>
+                    <a href="/view_hospital_detail/{{hos.admin_id}}" class="btn1">View More</a>
 
-                    <a href="appointment_form/{{hos.admin.id}}" class="btn1">Book Appointment</a>
+                    <a href="appointment_form/{{hos.admin_id}}" class="btn1">Book Appointment</a>
 
                     <!-- <a href="delete_doctor/{{doc.admin.id}}" class="btn2">Delete</a> -->
                 </div>
@@ -138,7 +139,7 @@
 
 
     
-    <!-- <script src="{% static 'js/user_homepage.js' %}"></script> -->
+    <script src="{% static 'js/user_homepage.js' %}"></script>
    
 
 </body>

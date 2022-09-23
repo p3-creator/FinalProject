@@ -1,0 +1,59 @@
+{% extends "hospitaladmin_nav.html" %}
+{% load static %}
+{% block body %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"  href="{% static 'css/hospital_appointments.css' %}">
+    <title>Appointment Details</title>
+</head>
+<body>
+  {% if booked %}
+  {% for book in booked %}
+    <div class="wrapper_app">
+     
+        <div class="container_app">
+           <div class="box_app">
+            <h1>Doctor : {{book.doctor_id.admin.first_name}}  {{book.doctor_id.admin.last_name}}</h1>
+            <h1>Appointment Date:{{book.date}}</h1>
+            <h1>Appointment Time:{{book.appointment_slot_id.start_time}}-{{book.appointment_slot_id.end_time}}</h1>
+            <h1>Patient:{{User.admin.first_name}}-{{User.admin.last_name}}-</h1>
+            <h1>Rs. :{{book.amount}}</h1>
+              
+         
+          </div>
+        </div>
+      </div>
+      {% endfor  %}
+    {% else %}
+    <div class="wrapper_app">
+     
+        <div class="container_app">
+           <div class="box_app">
+            <div>
+                {% if messages %}
+                   <ul class="messages">
+                   {% for msg in messages %}
+                   
+                   <div class="alert alert-{{msg.tags}}" role="alert" style="margin: 10px;border:solid rgb(11, 95, 101);border-radius: 10px;color:black;padding:6px">
+                   {{msg.message}}
+                   </div>
+                   
+                   {% endfor %}
+                   </ul>
+                   {% endif %}
+               </div>
+         
+          </div>
+        </div>
+      </div>
+    {% endif %}
+</body>
+</html>
+{% endblock %}
+

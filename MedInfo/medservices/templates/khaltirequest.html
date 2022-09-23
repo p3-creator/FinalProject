@@ -4,11 +4,9 @@
 </head>
 <body>
     
-   
-     <!-- Place this where you need payment button -->
-     <h3>Your  amount is Rs . {{appointment.total_amount}}</h3>
+    <!-- Place this where you need payment button -->
+    <h3>Your  amount is Rs . {{appointment.amount}}</h3>
     <button id="payment-button">Pay with Khalti</button>
-    
     <!-- Place this where you need payment button -->
     <!-- Paste this code anywhere in you body tag -->
 
@@ -30,12 +28,11 @@
                 ],
             "eventHandler": {
                 onSuccess (payload) {
-                    // hit merchant api for initiating verfication
                     axios.get("/khalti-verify/",{
                         params: {
                             "token":payload.token,
-                             "total_amount":payload.amount,
-                             "appointment_id":"{{appointment.id}}"
+                             "amount":payload.amount,
+                             "appointment_id":"{{appointment.id}}",
                         }
                     }).then(function(resp){
                         if (resp.data.success == true){
@@ -46,7 +43,6 @@
                             location.href = "{{request.build_absolute_uri}}"
                         }
                     })
-                    
                 },
                 onError (error) {
                     console.log(error);
@@ -61,10 +57,10 @@
         var btn = document.getElementById("payment-button");
         btn.onclick = function () {
             // minimum transaction amount must be 10, i.e 1000 in paisa.
-            checkout.show({amount: {{appointment.total_amount}}*100});
+            checkout.show({amount: {{appointment.amount}}*100});
         }
     </script>
     <!-- Paste this code anywhere in you body tag -->
-    
+   
 </body>
 </html>

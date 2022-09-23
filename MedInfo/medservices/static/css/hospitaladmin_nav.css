@@ -9,6 +9,11 @@
 
 }
 
+.wrapper_profile{
+    margin: 100px 10px 10px 300px;
+    padding : 5%;
+}
+
 .top-navbar{
     background-color: rgba(0, 139, 139, 1);
     height: 65px;
@@ -20,6 +25,15 @@
     margin-left: 250px;
 }
 
+.container_profile{
+    background-color: #678e81;
+    overflow-wrap: anywhere;
+    border-radius: 20px;
+}
+
+.container_profile h1{
+    padding:20px;
+}
 
 .sidebar{
 position: fixed;

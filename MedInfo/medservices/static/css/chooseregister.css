@@ -68,7 +68,7 @@ nav label.logo{
     grid-area:image;
    margin:15px;
     
-    background: url("hospital.jpg");
+    background: url("/static/img/hospital.jpg");
     border-radius: 15px;
     background-size:cover;
     /* position: absolute;
@@ -86,7 +86,7 @@ nav label.logo{
     grid-area:image;
    margin:15px;
     
-    background: url("pharmacy.jpg");
+    background: url("/static/img/pharmacy.jpg");
     border-radius: 15px;
     background-size:cover;
  
@@ -97,7 +97,7 @@ nav label.logo{
     grid-area:image;
    margin:15px;
     
-    background: url("bloodbank.jpg");
+    background: url("/static/img/bloodbank.jpg");
     border-radius: 15px;
     background-size:cover;
  
@@ -107,7 +107,7 @@ nav label.logo{
 .card-image4{
     grid-area:image;
     margin:15px;
-    background: url("user.jpg");
+    background: url("/static/img/user.jpg");
     border-radius: 15px;
     background-size:cover;
  

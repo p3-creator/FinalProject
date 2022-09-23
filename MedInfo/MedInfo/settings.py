@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_URL = "/login"
+
+
+
 
 # Application definition
 
@@ -38,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'crispy_forms',
     'medservices',
     'medservices.appointment_function',
     
@@ -137,3 +141,14 @@ STATICFILES_DIRS = [
 
 #Registering EmailBackend
 AUTHENTICATION_BACKENDS = ['medservices.EmailBackEnd.EmailBackEnd']
+
+
+#new
+#for sending emails
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "medinfo392@gmail.com"              ####its value is kept in environment variable so others seeing this code cannot see username and password
+EMAIL_HOST_PASSWORD = "jlfyglqznnsavbww"

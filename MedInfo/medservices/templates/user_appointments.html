@@ -1,0 +1,58 @@
+{% extends "useradmin_nav.html" %}
+{% load static %}
+{% block body %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"  href="{% static 'css/user_appointments.css' %}">
+    <title>Appointment Details</title>
+</head>
+<body>
+  {% if user %}
+  {% for user in user %}
+    <div class="wrapper_app">
+     
+        <div class="container_app">
+           <div class="box_app">
+            <h1>Appointment with : {{user.doctor_id.admin.first_name}}  {{user.doctor_id.admin.last_name}}</h1>
+            <h1>Appointment Date:{{user.date}}</h1>
+            <h1>Appointment Time:{{user.appointment_slot_id.start_time}}-{{user.appointment_slot_id.end_time}}</h1>
+            <h1>You paid Rs. :{{user.amount}}</h1>
+              
+         
+          </div>
+        </div>
+      </div>
+      {% endfor  %}
+    {% else %}
+    <div class="wrapper_app">
+     
+        <div class="container_app">
+           <div class="box_app">
+            <div>
+                {% if messages %}
+                   <ul class="messages">
+                   {% for msg in messages %}
+                   
+                   <div class="alert alert-{{msg.tags}}" role="alert" style="margin: 10px;border:solid rgb(11, 95, 101);border-radius: 10px;color:black;padding:6px">
+                   {{msg.message}}
+                   </div>
+                   
+                   {% endfor %}
+                   </ul>
+                   {% endif %}
+               </div>
+         
+          </div>
+        </div>
+      </div>
+    {% endif %}
+</body>
+</html>
+{% endblock %}
+

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .first-container{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin:40px;
+            
+
+        }
+        h3{
+            margin: 20px;
+        }
+
+        *{
+    padding: 0;
+    margin:0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+
+}
+
+            nav{
+        background-color:darkcyan;
+        height:60px;
+        width:100%;
+        top:0;
+    }
+
+    nav label.logo{
+    color:azure;
+    font-size:40px;
+    line-height:60px;
+    padding:0 10px;
+    font-family:  'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bolder;
+
+}
+
+                nav ul{
+            float:right;
+            margin-right:50px;
+        }
+        
+        nav ul li{
+            display: inline-block;
+            line-height:40px;
+            margin: 0 10px;
+        }
+        
+        nav ul li a{
+            
+            color: white;
+            font-size:20px;
+            padding: 8px 14px;
+            border-style: solid;
+            border-color:rgb(189, 234, 12);
+            border-radius: 40px;
+            text-decoration: none;
+        
+        }
+        
+        nav ul li a.username{
+            color: white;
+            font-size:30px;
+            font-weight: 500;
+            padding: 8px 14px;
+            border:none; 
+        }
+        
+        nav ul li a:hover{
+            background: dimgrey;
+            
+        }
+
+        .row{
+            flex-wrap: wrap;
+        }
+       
+    </style>
+</head>
+<body>
+    <nav>
+        <label class="logo">MedInfo</label>
+        <ul>
+            {% if logged_in_user %}
+            <li><a class="username"> {{username}}</a></li>
+            <li><a href="/logout_user" class="right">Logout</a></li>
+            {% else %}
+            <li><a href="/chooseregister">Register</a></li>
+            <li><a href="/login">Login</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+ 
+    <div class="first-container">
+        <!-- <img src="https://www.bing.com/th?id=OIP.GD2B2RFIWKx7PIqyyR2b1QHaEK&w=165&h=104&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2" alt=" image" width="120px" height="120px" style="border:1px solid black; border-radius:50%;margin:10px; "> -->
+        <table>
+            <tr>
+                <td style="font-size: 100px; font-weight:bold; color:rgb(29, 32, 187);border:solid 2px black;padding:10px;border-radius: 10px;">
+                   {{hos.admin.username}}
+                </td>
+            </tr>
+            <tr>
+                <td style="font-size: 20px; font-weight:bold; color:rgb(29, 187, 68)">
+                 Address: {{hos.address}}
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+    <div>
+        
+        <table>
+            <!-- <tr>
+                <td >
+                    <h3><strong>Overview</strong></h3>
+                </td>
+            </tr> -->
+            <tr>
+                <td >
+                    <h1><strong>About {{hos.admin.username}}</strong></h1>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 20px;border:solid 2px rgb(29, 15, 135);border-radius: 20px;">
+                    {{hos.description}}
+                </td>
+            </tr>
+            <br>
+            <br>
+            
+        </table>
+        <br>
+        <br>
+        <br>
+        <table>
+            <tr>
+                <td >
+                    <h1>Specialities</h1>
+                </td>
+            </tr>
+            <tr>
+                <td style="border:solid 2px rgb(29, 15, 135);border-radius: 20px;"">
+                    <h3><strong>{{hos.specialities}}</strong></h3>
+                </td>
+            </tr>
+            
+            
+        </table>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div>
+       <h1>Doctors</h1>
+    </div>
+    {% for doc in doc %}
+    <div class="row">
+    <div class="first-container">
+        <table  style="width:400px; margin: 10px; border: 1px solid brown; border-radius: 10px;">
+            <tr>
+                <td rowspan="4">
+                    <img src ="https://www.hamrodoctor.com/img/def_dr_Male.png" style="width:50px; height:50px;">
+                </td>
+                <td >
+                    NMC Number : {{doc.nmc_number}}
+                 </td>
+                <td >
+                   Name : {{doc.admin.username}}
+                </td>
+            </tr>
+            <tr>
+                <td> Speciality : {{doc.specialities}}</td>
+            </tr>
+            <tr>
+                <td style ="margin-left:10;"> Education : {{doc.education}}</td>
+            </tr>
+        </table>
+        <!-- <table  style="width:400px; margin: 10px; border: 1px solid brown; border-radius: 10px;">
+            <tr>
+                <td rowspan="2">
+                    <img src ="https://www.hamrodoctor.com/img/def_dr_Male.png" style="width:50px; height:50px;">
+                </td>
+                <td >
+                    Doctorn name
+                </td>
+            </tr>
+            <tr>
+                <td>specialistskdhfkjsdhfkjsahdkjfhaksjhfkjashkj</td>
+            </tr>
+        </table>
+        <table  style="width:400px; margin: 10px; border: 1px solid brown; border-radius: 10px;">
+            <tr>
+                <td rowspan="2">
+                    <img src ="https://www.hamrodoctor.com/img/def_dr_Male.png" style="width:50px; height:50px;">
+                </td>
+                <td >
+                    Doctorn name
+                </td>
+            </tr>
+            <tr>
+                <td>specialistskdhfkjsdhfkjsahdkjfhaksjhfkjashkj</td>
+            </tr>
+        </table> -->
+    </div>
+</div>
+    {% endfor %}
+    
+</body>
+</html>

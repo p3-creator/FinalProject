@@ -1,0 +1,161 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/appointment_choosedatetime.css' %}">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+    <script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+    <script>
+      
+        
+
+
+
+      
+
+    </script>
+    <title>Appointment Form-next step</title>
+</head>
+<body>
+
+    <nav>
+        <label class="logo">MedInfo</label>
+        <ul>
+            {% if patient %}
+              <li><a class="username">Welcome {{patient.admin.username}}</a></li>
+                <li><a href="/user_profile">View Profile</a></li>
+              <li><a href="/logout_user" class="right">Logout</a></li>
+            {% else %}
+                <li><a href="/chooseregister">Register</a></li>
+                <li><a href="/login">Login</a></li>
+            {% endif %}
+
+        </ul>
+    </nav>
+
+
+            
+
+    <div class="container">
+
+
+
+        <form class="register-email" action="appointment_choosedatetime_save" method="POST">
+            <p class="register-text">Appointment</p>
+            {% csrf_token %}
+            <input type="hidden" name ="h_id" id="h_id" value="{{hospital.admin_id}}">
+
+            <input type="hidden" name ="d_id" id="d_id" value="{{doctor.admin.id}}">
+           
+
+
+           <div class="input-all">
+                <input type="date" placeholder="Enter Date" name="date" required>
+            </div>
+
+            <div>
+                <select name="timeslot" value="timeslot" class="select-box" id ="select_appointment">
+
+                 {% if appointment_time %}
+                     {% for app in appointment_time %}
+                        
+                    
+                        <option class= "option" value="{{app.id}}">{{app.start_time}}-{{app.end_time}}</option>
+                        
+                     {% endfor %}
+                        
+                  {% endif %} 
+
+                </select>
+            </div>
+
+            
+
+            <div class="input-all">
+                <input type="text"  name="name" readonly value=" patient name : {{patient.admin.first_name}} {{patient.admin.last_name}}">
+            </div>
+
+    
+            <div class="row">
+
+                <div class="input-all">
+                    <input type="text" placeholder="Address" name="address" value = "address : {{patient.address}}">
+                </div>
+
+                <div class="input-all">
+                    <input type="tel" id="phone" placeholder="Phone Number" name="phone" value = "phone number : {{patient.phone}}">
+                </div>
+
+                <div class="input-all">
+                    <input type="number" placeholder="Total Amount" name="amount" required>
+                </div>
+             <br>
+             <br>
+            </div> 
+           
+             <div class="input-all">
+                <button class="register-btn">Proceed to next step</button>
+            </div>
+
+            <div>
+                {% if messages %}
+                   <ul class="messages">
+                   {% for msg in messages %}
+                   
+                   <div class="alert alert-{{msg.tags}}" role="alert" style="margin: 10px;border:solid red;border-radius: 10px;color:black;padding:6px">
+                   {{msg.message}}
+                   </div>
+                   
+                   {% endfor %}
+                   </ul>
+                   {% endif %}
+               </div>
+
+           
+        </form>
+    </div>
+
+  
+    
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

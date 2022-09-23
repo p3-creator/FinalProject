@@ -90,29 +90,31 @@ class User(models.Model):
         return f"{self.username}"
 
 
-class Appointment_timeslots(models.Model):
+class doc_appointment_shift(models.Model):
     doctor_id = models.ForeignKey(Doctor,on_delete=models.CASCADE)
     start_time = models.TimeField()
     end_time = models.TimeField()
     time_slot = models.PositiveIntegerField(default=15)
     objects = models.Manager()
-    
-    def __str__(self):
-        return f"{self.doctor_id}"
+
+
+class save_doc_appointments_timeslots(models.Model):
+     doctor_id = models.ForeignKey(Doctor,on_delete=models.CASCADE)
+     start_time = models.TimeField()
+     end_time = models.TimeField()
+     objects = models.Manager()
+
 
 
 
 class booked_appointments(models.Model):
-    doctor_id = models.ForeignKey(Doctor,on_delete=models.PROTECT)   #edit this on_delete by seeing parameters for it
+    doctor_id = models.ForeignKey(Doctor,on_delete=models.PROTECT)     #edit this on_delete by seeing parameters for it
     patient_id = models.CharField(max_length=10)
-    date = models.DateField(default=datetime.date.today)
-    appointment_slot_id = models.ForeignKey(Appointment_timeslots,on_delete=models.CASCADE)    #edit this on_delete not cascade at least
+    date = models.DateField()
+    appointment_slot_id = models.ForeignKey(save_doc_appointments_timeslots,on_delete=models.CASCADE)    #edit this on_delete not cascade at least
+    amount = models.PositiveIntegerField(default=100)
     status = models.BooleanField(default=False)
-    speciality = models.CharField(max_length=100)
     objects = models.Manager()
-
-    def __str__(self):
-        return f"{self.patiend_id}"
 
 
 # class Appointment(models.Model):

@@ -1,0 +1,28 @@
+body{
+    background:whitesmoke;
+}
+
+
+.wrapper{
+    margin: 100px 10px 10px 300px;
+    padding : 5%;
+}
+
+
+.row{
+    display:flex;
+    flex-wrap: wrap;
+}
+
+h2{
+     margin-left: 400px;
+    margin-top:70px;
+    color:brown;
+    font-size: 40px;
+    text-align: center;
+}
+
+.container{
+    display:flex;
+}
+    
