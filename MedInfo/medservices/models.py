@@ -215,6 +215,17 @@ class Pharmacy(models.Model):
 
 
 
+class save_map(models.Model):
+    h_id = models.ForeignKey(Hospital,on_delete=models.CASCADE)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6)
+    objects = models.Manager()
+
+
+
+
+
+
 
 
 

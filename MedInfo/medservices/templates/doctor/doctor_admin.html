@@ -1,14 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h2>HIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII DOCTOR ADMIN WELCOME TO MY PAGE
-        
-    </h2>
-</body>
-</html>
+{% extends "doctor_adminnav.html" %}
+
+{% block body %}
+
+<div style="margin-top:90px;margin-left:280px;">
+    {% if messages %}
+    <ul class="messages">
+    {% for msg in messages %}
+    {% if msg.tags == 'error' %}
+    
+    <div class="alert alert-{{msg.tags}}" role="alert" style="margin: 10px;border:solid red;border-radius: 10px;color:black;padding:6px">
+    {{msg.message}}
+    </div>
+    {% endif %}
+    
+    {% if msg.tags == 'success' %}
+    
+    <div class="alert alert-{{msg.tags}}" role="alert" style="margin: 15px;background-color: rgb(72, 255, 0);border:solid black;border-radius: 10px;color:rgb(77, 18, 241);padding:6px">
+    {{msg.message}}
+    </div>
+    {% endif %}
+    
+    {% endfor %}
+    </ul>
+    {% endif %}
+ </div>
+  
+
+
+{% endblock %}

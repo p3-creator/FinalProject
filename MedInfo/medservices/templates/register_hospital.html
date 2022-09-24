@@ -33,6 +33,34 @@
 
 <body>
     <div class="container">
+
+        
+        <div style="margin-top:90px;margin-left:200px;">
+            {% if messages %}
+            <ul class="messages">
+            {% for msg in messages %}
+            {% if msg.tags == 'error' %}
+            
+            <div class="alert alert-{{msg.tags}}" role="alert" style="margin: 10px;border:solid red;border-radius: 10px;color:black;padding:6px">
+            {{msg.message}}
+            </div>
+            {% endif %}
+            
+            {% if msg.tags == 'success' %}
+            
+            <div class="alert alert-{{msg.tags}}" role="alert" style="margin: 15px;background-color: rgb(196,227,36);border:solid black;border-radius: 10px;color:rgb(77, 18, 241);padding:6px">
+            {{msg.message}}
+            </div>
+            {% endif %}
+            
+            {% endfor %}
+            </ul>
+            {% endif %}
+
+
+            
+         </div>
+
         <form class="register-email" action="/doRegister_hospital" method="POST">
             {% csrf_token %}
             <p class="register-text">Create Hospital Account</p>
@@ -125,6 +153,11 @@
             </div>
             <p class="login-text">Have an account? <a href="login/">Login Here</a></p>
         </form>
+
+
+
+
+
     </div>
 
 </body>

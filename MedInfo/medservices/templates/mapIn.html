@@ -39,8 +39,12 @@
       display: none;
     }
   </style>
+  <form method="POST" action="/save_map/">
+    {% csrf_token %}
   <input type="text" name="long" id="long" value="">
   <input type="text" name="lat" id="lat" value="">
+  <button type="'Submit">Save your location</button>
+ </form>
   <div id="map"></div>
   <pre id="coordinates" class="coordinates"></pre>
 

@@ -41,6 +41,16 @@ urlpatterns = [
 
     path('hos_view_app',views.hos_view_app),
 
+
+
+
+  path('logout_doctor',views.logout_doctor),
+    path('doctor_admin/doctor_profile/',views.doctor_profile),
+    path('edit_doc_timeslot_save/',views.edit_doc_timeslot_save),
+
+
+    path('save_map/',views.savemap),
+
     path('hospital_admin/mapIn',views.mapin),
 
     path('view_hospital_detail/<str:hos_id>',views.view_hospital_detail),
@@ -50,6 +60,10 @@ urlpatterns = [
     path('appointment_form/<str:h_id>',views.appointment_form,name="appointment_form"),
     path('appointment_form/appointment_choosedatetime/',views.appointment_choosedatetime,name="appointment_choosedatetime"),
     path('appointment_form/appointment_choosedatetime/appointment_choosedatetime_save',views.appointment_choosedatetime_save,name="appointment_choosedatetime_save"),
+
+    path('view_doc_app/',views.view_doc_app)
+
+
 
     path('view_user_appointments/',views.user_appointments,name="viewappointment"),
 

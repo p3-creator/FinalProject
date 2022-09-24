@@ -1,0 +1,60 @@
+{% extends "doctor_adminnav.html" %}
+{% load static %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"  href="{% static 'css/doctor_profile.css' %}">
+    <title>Doctor Profile</title>
+</head>
+<body>
+
+    <div class="wrapper">
+     
+        <div class="container">
+           <div class="box">
+            <h1>Nmc Number :  {{doc.nmc_number}}</h1>
+             <h1>First Name :  {{doc.admin.first_name}}</h1>
+             <h1>Last Name :  {{doc.admin.last_name}}</h1>
+            <h1>Username : {{doc.admin.username}}</h1>
+            <h1>Speciality:{{doc.specialities}}</h1>
+            <h1>Education:{{doc.education}}</h1>
+            <h1>Email :  {{doc.admin.email}}</h1>
+    
+         
+          </div>
+        </div>
+      </div>
+
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

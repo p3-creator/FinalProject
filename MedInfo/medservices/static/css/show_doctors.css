@@ -94,8 +94,37 @@ a.btn3{
     text-decoration: none;
 }
 
-@media(max-width:770px) {
+@media (max-width:768px){
+
     .wrapper{
-        padding:20px;
+      margin: 100px 10px 10px 150px;
     }
-}
+    .box{
+    
+    width:180px;
+    padding:2px;
+    }
+    
+    .box h1{
+     padding:5px;
+    font-size:12px;
+    
+    }
+    
+    a.btn1{
+    padding:5px;
+    font-size:12px;
+    }
+    
+    a.btn2{
+    padding:5px;
+    font-size:12px;
+    }
+    
+    a.btn3{
+    padding:5px;
+    font-size:8px;
+    }
+    
+    
+    }

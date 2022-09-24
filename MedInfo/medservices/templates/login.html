@@ -13,6 +13,30 @@
 </head>
 <body>
     <div class="container">
+
+        <div>
+            {% if messages %}
+            <ul class="messages">
+            {% for msg in messages %}
+            {% if msg.tags == 'error' %}
+            
+            <div class="alert alert-{{msg.tags}}" role="alert" style="margin: 10px;border:solid red;border-radius: 10px;color:black;padding:6px">
+            {{msg.message}}
+            </div>
+            {% endif %}
+            
+            {% if msg.tags == 'success' %}
+            
+            <div class="alert alert-{{msg.tags}}" role="alert" style="margin: 15px;background-color:rgb(196,227,36);border:solid black;border-radius: 10px;color:rgb(77, 18, 241);padding:6px">
+            {{msg.message}}
+            </div>
+            {% endif %}
+            
+            {% endfor %}
+            </ul>
+            {% endif %}
+
+</div>
        <form  action="/doLogin" method="POST"    class="login-email">
         {% csrf_token %}
            <p class="login-text">Login</p>
@@ -26,22 +50,7 @@
         <div class="input-all">
             <button class="login-btn">Login</button>
         </div>
-        <div>
-            <a href="password-reset" class="fgt-psw">Forgot Password?</a>
-        </div>
-        <div>
-            {% if messages %}
-    <ul class="messages">
-    {% for msg in messages %}
-    
-    <div class="alert alert-{{msg.tags}}" role="alert" style="margin: 10px;border:solid red;border-radius: 10px;color:black;padding:6px">
-    {{msg.message}}
-    </div>
-    
-    {% endfor %}
-    </ul>
-    {% endif %}
-</div>
+
         <!-- <a href="#"  class="fgt-psw">Forgot password?</a> -->
        </form>
     </div>

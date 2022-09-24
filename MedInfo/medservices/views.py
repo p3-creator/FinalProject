@@ -7,7 +7,7 @@ from django.db.models import Q
 
 from medservices.EmailBackEnd import EmailBackEnd
 
-from .models import Hospital, Doctor, User, doc_appointment_shift,save_doc_appointments_timeslots, booked_appointments
+from .models import Hospital, Doctor, User, doc_appointment_shift,save_doc_appointments_timeslots, booked_appointments, save_map
 from django.views.generic import View
 from django.urls import reverse
 from django.http import JsonResponse
@@ -78,17 +78,37 @@ def doRegister_hospital(request):
         else:
             name = request.POST.get("name")
             
-            regularExpression= "^[A-Za-z][A-Za-z]{7,29}$"
+            # regularExpression= "^[A-Za-z][A-Za-z]{7,29}$"
+            # reg_email = "^[^0-9][a-zA-Z0-9_.]{3,1}@[a-zA-Z]{3,}[.]{1}[a-zA-Z]{2,6}$"
+            # regnum = "^[9][8][0-9]{8}$"
+            # regpsw = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
 
             description = request.POST.get("description")
             phone = request.POST.get("phone")
             address = request.POST.get("address")
             district = request.POST.get("district")
-            website = request.POST.get("website")
+            #website = request.POST.get("website")
             specialities = request.POST.get("specialities")
             email = request.POST.get("email")
             password = request.POST.get("password")
             cpassword = request.POST.get("cpassword")
+
+
+            # if  not re.match(regularExpression,name):
+            #       return render(request,"register_hospital.html",{'error_name':True})
+
+            # if  not re.match(reg_email,email):
+            #       return render(request,"register_hospital.html",{'error_email':True})
+
+            # if not re.match(regnum,phone):
+            #        return render(request,"register_hospital.html",{'error_phone':True})
+
+            # if  not re.match(regularExpression,password):
+            #       return render(request,"register_hospital.html",{'error_psw':True})
+
+
+
+
             if  CustomUser.objects.filter(email=email).exists():
                     return HttpResponse("Email Already Exists!")
             else:
@@ -100,7 +120,7 @@ def doRegister_hospital(request):
                         user.hospital.specialities = specialities
                         user.hospital.address = address
                         user.hospital.district = district
-                        user.hospital.website = website
+                        #user.hospital.website = website
                         user.save()
                         return HttpResponse("Successfully Registered")
                   else:
@@ -123,7 +143,7 @@ def doRegister_user(request):
             if  CustomUser.objects.filter(email=email).exists():
                     return HttpResponse("Email Already Exists!")
             else:
-                  #if CustomUser.objects.filter(username=name , user_type = 5):
+                  
                   if CustomUser.objects.filter(username=username).count()>0:
                      return HttpResponse("Username Already Exists!!Try something new!")
                   else:
@@ -172,6 +192,7 @@ def doLogin(request):
                   
                  
                if user.user_type== "2":
+                         request.session['doc_id'] = user.id
                          return HttpResponseRedirect("doctor_admin/")
 
                if user.user_type == "3":
@@ -289,6 +310,19 @@ def logout_hospital(request):
 def logout_user(request):
       logout(request)
       return HttpResponseRedirect("/")
+
+
+def logout_doctor(request):
+      logout(request)
+      return HttpResponseRedirect("/")
+
+
+
+def doctor_profile(request):
+      doctor = Doctor.objects.get(admin = request.session.get('doc_id'))
+      # print(doctor.nmc_number)
+      # doctor = Doctor.objects.filter(admin_id = doctor.id)
+      return render(request,'doctor/doctor_profile.html',{"doc":doctor})
 
 @login_required
 def search(request):
@@ -464,9 +498,56 @@ def delete_doctor_save(request):
             messages.success(request,"Successfully Deleted Doctor")
             return HttpResponseRedirect('hospital_admin/')  
 
+
 def add_doc_timeshift(request,doctor_id):
         doctor = Doctor.objects.get(admin_id = doctor_id)
-        return render(request, 'doctor/add_doc_timeshift.html',{"doctor":doctor})
+        doctor_obj = Doctor.objects.get(id = doctor.id)
+
+        if  doc_appointment_shift.objects.filter(doctor_id = doctor_obj).exists():
+            ts =  doc_appointment_shift.objects.get(doctor_id = doctor_obj)
+            messages.error(request,'Timeslot already present.You can edit here!!!')
+            return render(request, 'doctor/edit_doc_timeshift.html',{"doctor":doctor,"ts":ts})
+              
+        else:
+
+            return render(request, 'doctor/add_doc_timeshift.html',{"doctor":doctor})
+
+
+
+def edit_doc_timeslot_save(request):
+      if request.method != 'POST':
+                  return HttpResponse("<h2>Method Not Allowed</h2>")
+      else:
+            start_time = request.POST.get("start_time")
+            end_time = request.POST.get("end_time")
+            time_slot = int(request.POST.get("time_slot"))
+            doctor_id = request.POST.get("d_id")
+            doctor_obj =Doctor.objects.get(id=doctor_id)
+            # try:
+            aap = doc_appointment_shift.objects.get(doctor_id = doctor_obj)
+            aap.start_time = start_time
+            aap.end_time = end_time
+            aap.time_slot = time_slot
+            if end_time > start_time:
+                  aap.save()
+
+                  save_doc_appointments_timeslots.objects.filter(doctor_id = doctor_obj).delete()    
+                  
+                  st = datetime.datetime.strptime(aap.start_time,"%H:%M")
+                  et =  datetime.datetime.strptime(aap.end_time,"%H:%M")
+                  ts = time_slot
+                  ft = datetime.datetime.strptime("00:00","%H:%M")
+                  while(ft < et): 
+                        ft = st + datetime.timedelta(minutes=ts)
+                        stv = save_doc_appointments_timeslots.objects.create(start_time =st.strftime("%H:%M"),end_time=ft.strftime("%H:%M"),doctor_id=doctor_obj)
+                        stv.save()
+                        st = ft
+                  messages.success(request,"Successfully Editted Time Details")
+                  return HttpResponseRedirect('/hospital_admin/') 
+            else:
+                    messages.error(request,'Failed,Check your end time.Try again!')
+                    return HttpResponseRedirect('/hospital_admin/')
+
 
 def save_doc_timeslot(request):
    if request.method != 'POST':
@@ -657,6 +738,14 @@ def user_appointments(request):
             
             return render(request,'user_appointments.html')
 
+
+
+def view_doc_app(request):
+      doctor =  request.session.get('doc_id')
+      doctor_obj = Doctor.objects.get(doctor_id=doctor)
+      booked_appointments.objects.filter()
+
+
       
 
 
@@ -786,3 +875,18 @@ def mapIn(request):
 #            "hospitals" : hospital,
 #             "docs": hospital.doctors.all()
 #      })
+
+
+
+
+
+
+
+def savemap(request):
+      lattitude = request.POST.get('lat')
+      longitude = request.POST.get('long')
+      hospital_id = request.session.get('hos_id')
+      hos = Hospital.objects.get(admin=hospital_id)
+      a = save_map.objects.create(latitude=lattitude,longitude=longitude,h_id = hos)
+      a.save()
+      return  HttpResponseRedirect('/hospitaladmin')

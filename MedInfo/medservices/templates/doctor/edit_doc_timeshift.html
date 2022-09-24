@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/add_doc_timeshift.css' %}">
+    <title>Edit Doctor Timeslot</title>
+</head>
+<body>
+    <div class="container">
+    <div>
+        {% if messages %}
+        <ul class="messages">
+        {% for msg in messages %}
+        
+        <div class="alert alert-{{msg.tags}}" role="alert" style="margin: 10px;background:solid rgb(187, 255, 0);border-radius: 10px;color:black;padding:6px">
+        {{msg.message}}
+        </div>
+        
+        {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+        <form class="doctor_timeslot" method="POST" action="/edit_doc_timeslot_save/">
+            <p class="text">Edit Doctor Time Slot</p>
+            {% csrf_token %}
+            <div class="input-all">
+                <label for="start_time"><b>Edit start time:</b></label>
+                <br>
+                <input type="time"  name ="start_time" value = {{ts.start_time}} required>
+              
+              
+            </div> 
+            <input type="hidden"  name ="d_id" value="{{doctor.id}}" required>
+
+            <div class="input-all">
+                <label for="end_time"><b>Edit end time:</b></label>
+                <br>
+                <input type="time" name ="end_time" value={{ts.end_time}} required>
+            </div>
+            
+            <div class="input-all">
+                <label for="end_time"><b>Edit time slot(in minutes):</b></label>
+                <br>
+                <input type="integer"  name ="time_slot"value={{ts.time_slot}} required>
+            </div> 
+              
+            
+            <div class="input-all">
+                <button class="add-btn">Edit doctor appointment shift</button>
+            </div>
+
+         
+           </form>
+        </div>
+</body>
+</html>
